@@ -1,3 +1,308 @@
 <nb-card>
   <nb-card-header>Close Cycle</nb-card-header>
+  <nb-card-body class="example-items-col mt-2">
+    <form
+      name="createProviderForm"
+      class="dis-flex just-between align-start"
+      [formGroup]="closeCycleForm"
+      (ngSubmit)="onSubmit()">
+
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="Codigo Auncliar">Codigo Auncliar</label>
+        <input
+          type="text"
+          nbInput
+          fullWidth
+          formControlName="codigoAuncliar"
+          name="Codigo Auncliar"
+          fieldSize="medium"
+          placeholder="Codigo Auncliar"
+          class="dis-block"
+          />
+      </div>
+
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="Fecha Auncliar">Fecha Auncliar</label>
+        <input
+          nbInput
+          placeholder="Pick Date"
+          fullWidth
+          class="datePicker-style"
+          [nbDatepicker]="fechaAuncliar"
+          formControlName="fechaAuncliar">
+        <nb-datepicker
+          #fechaAuncliar>
+        </nb-datepicker>
+      </div>
+
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="4. Numero de DEX">4. Numero de DEX</label>
+        <input
+          type="number"
+          nbInput
+          fullWidth
+          formControlName="numerodeDEX"
+          name="desc"
+          fieldSize="medium"
+          placeholder="4. Numero de DEX"
+          class="dis-block"
+          />
+      </div>
+
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="997.F.Aprobacion">997.F.Aprobacion</label>
+        <input
+          nbInput
+          placeholder="Pick Date"
+          [nbDatepicker]="FAprobacion"
+          formControlName="FAprobacion"
+          fullWidth
+          class="datePicker-style">
+        <nb-datepicker
+          #FAprobacion>
+        </nb-datepicker>
+      </div>
+
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="Fec. Embarque">Fec. Embarque</label>
+        <input
+          nbInput
+          placeholder="Fec. Embarque"
+          [nbDatepicker]="FecEmbarque"
+          formControlName="FecEmbarque"
+          fullWidth>
+        <nb-datepicker
+          #FecEmbarque>
+        </nb-datepicker>
+      </div>
+
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="Fecha Deuda Externa Plan">Fecha Deuda Externa Plan</label>
+        <nb-select
+          placeholder="Fecha Deuda Externa Plan"
+          formControlName="fechaDeudaExternaPlan"
+          class="dis-block select-style"
+          fullWidth
+          name="FechaDeudaExternaPlan">
+          <nb-option value="1">Option 1</nb-option>
+          <nb-option value="2">Option 2</nb-option>
+          <nb-option value="3">Option 3</nb-option>
+          <nb-option value="4">Option 4</nb-option>
+        </nb-select>
+      </div>
+
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="Fecha Deuda Externa">Fecha Deuda Externa</label>
+        <nb-select
+          placeholder="Fecha Deuda Externa"
+          formControlName="fechaDeudaExterna"
+          class="dis-block select-style"
+          fullWidth
+          name="FechaDeudaExterna">
+          <nb-option value="1">Option 1</nb-option>
+          <nb-option value="2">Option 2</nb-option>
+          <nb-option value="3">Option 3</nb-option>
+          <nb-option value="4">Option 4</nb-option>
+        </nb-select>
+      </div>
+
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="Plan">Plan</label>
+        <nb-select
+          placeholder="Plan"
+          formControlName="Plan"
+          class="dis-block select-style"
+          fullWidth
+          name="Plan">
+          <nb-option value="1">Option 1</nb-option>
+          <nb-option value="2">Option 2</nb-option>
+          <nb-option value="3">Option 3</nb-option>
+          <nb-option value="4">Option 4</nb-option>
+        </nb-select>
+      </div>
+
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="11. Compania Exportadora">11. Compania Exportadora</label>
+        <nb-select
+          placeholder="11. Compania Exportadora"
+          formControlName="CompaniaExportadora"
+          class="dis-block select-style"
+          fullWidth
+          name="CompaniaExportadora">
+          <nb-option value="1">Option 1</nb-option>
+          <nb-option value="2">Option 2</nb-option>
+          <nb-option value="3">Option 3</nb-option>
+          <nb-option value="4">Option 4</nb-option>
+        </nb-select>
+      </div>
+
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="38. Comprador">38. Comprador</label>
+        <nb-select
+          placeholder="38. Comprador"
+          formControlName="Comprador"
+          class="dis-block select-style"
+          fullWidth
+          name="38. Comprador">
+          <nb-option value="1">Option 1</nb-option>
+          <nb-option value="2">Option 2</nb-option>
+          <nb-option value="3">Option 3</nb-option>
+          <nb-option value="4">Option 4</nb-option>
+        </nb-select>
+      </div>
+
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="70. Pais">70. Pais</label>
+        <nb-select
+          placeholder="70. Pais"
+          formControlName="Pais"
+          class="dis-block select-style"
+          fullWidth
+          name="70. Pais">
+          <nb-option value="1">Option 1</nb-option>
+          <nb-option value="2">Option 2</nb-option>
+          <nb-option value="3">Option 3</nb-option>
+          <nb-option value="4">Option 4</nb-option>
+        </nb-select>
+      </div>
+
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="Aduana">Aduana</label>
+        <nb-select
+          placeholder="Aduana"
+          formControlName="Aduana"
+          class="dis-block select-style"
+          fullWidth
+          name="Aduana">
+          <nb-option value="1">Option 1</nb-option>
+          <nb-option value="2">Option 2</nb-option>
+          <nb-option value="3">Option 3</nb-option>
+          <nb-option value="4">Option 4</nb-option>
+        </nb-select>
+      </div>
+
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="Velor Fletes">73. Velor Fletes</label>
+        <input
+          type="number"
+          nbInput
+          fullWidth
+          formControlName="VelorFletes"
+          name="desc"
+          fieldSize="medium"
+          placeholder="VelorFletes"
+          class="dis-block"
+          />
+      </div>
+
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="Velor Fletes">74. Velor Seguro</label>
+        <input
+          type="number"
+          nbInput
+          fullWidth
+          formControlName="VelorSeguro"
+          name="desc"
+          fieldSize="medium"
+          placeholder="Velor Seguro"
+          class="dis-block"
+          />
+      </div>
+
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="Velor Otros Gastos">75. Velor Otros Gastos</label>
+        <input
+          type="number"
+          nbInput
+          fullWidth
+          formControlName="VelorOtrosGastos"
+          name="desc"
+          fieldSize="medium"
+          placeholder="Velor Otros Gastos"
+          class="dis-block"
+          />
+      </div>
+
+      <div
+        class="p-1"
+        [class.w-75]="25">
+        <label for="Documento">Documento</label>
+        <textarea
+          nbInput
+          fullWidth
+          placeholder="Textarea"
+          formControlName="Documento">
+        </textarea>
+      </div>
+
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="Compania">Compania</label>
+        <nb-select
+          placeholder="Compania"
+          formControlName="CompaniaSel"
+          class="dis-block select-style"
+          fullWidth
+          name="Compania">
+          <nb-option value="1">Option 1</nb-option>
+          <nb-option value="2">Option 2</nb-option>
+          <nb-option value="3">Option 3</nb-option>
+          <nb-option value="4">Option 4</nb-option>
+        </nb-select>
+      </div>
+
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="Compania">Compania</label>
+        <input
+          type="text"
+          nbInput
+          fullWidth
+          formControlName="CompaniaDO"
+          name="Numero Factura"
+          fieldSize="medium"
+          placeholder="DO"
+          class="dis-block"
+          />
+      </div>
+
+      <div
+        class="p-1 sybmit-area">
+        <button nbButton status="info" type="submit">SUBMIT</button>
+      </div>
+
+          </form>
+  </nb-card-body>
 </nb-card>

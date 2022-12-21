@@ -1,7 +1,7 @@
 import { FormsModule } from '@angular/forms';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NgModule } from '@angular/core';
-import { NbLayoutModule, NbMenuModule, NbThemeModule, NbInputModule, NbCardModule, NbSelectModule, NbDatepickerModule, NbButtonModule, NbToastrModule } from '@nebular/theme';
+import { NbLayoutModule, NbMenuModule, NbThemeModule, NbInputModule, NbCardModule, NbSelectModule, NbDatepickerModule, NbButtonModule, NbToastrModule, NbTreeGridModule, NbCheckboxModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
@@ -17,6 +17,7 @@ import { CreateProviderComponent } from './provider/create-provider/create-provi
 import { ViewProviderComponent } from './provider/view-provider/view-provider.component';
 import { CreateBuyersComponent } from './buyers/create-buyers/create-buyers.component';
 import { ViewBuyersComponent } from './buyers/view-buyers/view-buyers.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -34,7 +35,10 @@ import { ViewBuyersComponent } from './buyers/view-buyers/view-buyers.component'
     NbDatepickerModule.forRoot(),
     NbButtonModule,
     FormsModule,
-    NbToastrModule.forRoot()
+    NbToastrModule.forRoot(),
+    ReactiveFormsModule,
+    NbTreeGridModule,
+    NbCheckboxModule
   ],
   declarations: [
     PagesComponent,

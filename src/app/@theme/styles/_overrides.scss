@@ -3,9 +3,12 @@
 @mixin nb-overrides() {
   nb-select.size-medium button {
     padding: 0.4375rem 2.2rem 0.4375rem 1.125rem !important;
-
+    margin: 5px 0;
     nb-icon {
       right: 0.41rem !important;
     }
+  }
+  nb-input.size-medium {
+    margin: 5px 0;
   }
 }
