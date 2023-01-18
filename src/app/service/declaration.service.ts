@@ -19,6 +19,21 @@ export class DeclarationService {
     return this.http.post<any>(Url, data).pipe(catchError(this.errorHandle));
   }
 
+  create_Provider(data: any): Observable<any> {
+    console.log(data)
+    const Url = `${environment.apiKEY}addProvider`;
+    return this.http.post<any>(Url, data).pipe(catchError(this.errorHandle));
+  }
+
+  get_Provider_List(data: any): Observable<any> {
+    console.log(data)
+    const Url = `${environment.apiKEY}viewProvider`;
+    return this.http.post<any>(Url, data).pipe(catchError(this.errorHandle));
+  }
+
+
+
+
   errorHandle(error: HttpErrorResponse) {
     console.log('error', error.message);
     return throwError(error || 'server error');

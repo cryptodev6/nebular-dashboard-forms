@@ -1,86 +1,32 @@
 <nb-card>
   <nb-card-header>Create Provider</nb-card-header>
   <nb-card-body class="example-items-col mt-2">
-    <form
-      name="createProviderForm"
-      class="dis-flex just-between align-start"
-      (ngSubmit)="onSubmit()"
-    >
-      <div
-        class="p-1"
-        [class.w-25]="data.width === 25"
-        [class.w-75]="data.width === 75"
-        *ngFor="let data of formFeildList; let i = index"
-      >
+    <form  name="createProviderForm" #myForm="ngForm" class="dis-flex just-between align-start" (ngSubmit)="onSubmit(myForm)">
+      <div class="p-1" [class.w-25]="data.width === 25" [class.w-75]="data.width === 75"
+        *ngFor="let data of formFeildList; let i = index">
+
         <label for="declaration">{{ data.title }}</label>
-        <nb-select
-          *ngIf="data.inputType === 'list'"
-          placeholder="{{ data.name }}"
-          formControlName ="data.value"
-          class="dis-block"
-          fullWidth
-          name="{{ data.name }}"
-        >
+        <nb-select *ngIf="data.inputType === 'list'" placeholder="{{ data.name }}" [(ngModel)]="data.value"
+          class="dis-block" fullWidth name="{{ data.name }}">
           <nb-option value="1">Option 1</nb-option>
           <nb-option value="2">Option 2</nb-option>
           <nb-option value="3">Option 3</nb-option>
           <nb-option value="4">Option 4</nb-option>
         </nb-select>
 
-        <input
-          *ngIf="data.inputType === 'number'"
-          type="number"
-          nbInput
-          fullWidth
-          formControlName ="data.value"
-          name="{{ data.name }}"
-          fieldSize="medium"
-          placeholder="{{ data.name }}"
-          class="dis-block"
-        />
-        <input
-          *ngIf="data.inputType === 'text'"
-          type="text"
-          nbInput
-          fullWidth
-          formControlName ="data.value"
-          name="{{ data.name }}"
-          fieldSize="medium"
-          placeholder="{{ data.name }}"
-          class="dis-block"
-        />
-        <input
-          *ngIf="data.inputType === 'file'"
-          type="file"
-          nbInput
-          fullWidth
-          (change)="onFileChange($event, data)"
-          name="{{ data.name }}"
-          fieldSize="medium"
-          placeholder="{{ data.name }}"
-          class="dis-block"
-          formControlName ="data.value"
-          [status]="error ? 'danger' : 'basic'"
-        />
+        <input *ngIf="data.inputType === 'number'" type="number" nbInput fullWidth [(ngModel)]="data.value"
+          name="{{ data.name }}" fieldSize="medium" placeholder="{{ data.name }}" class="dis-block" />
+        <input *ngIf="data.inputType === 'text'" type="text" nbInput fullWidth [(ngModel)]="data.value"
+          name="{{ data.name }}" fieldSize="medium" placeholder="{{ data.name }}" class="dis-block" />
+        <input *ngIf="data.inputType === 'file'" type="file" nbInput fullWidth (change)="onFileChange($event, data)"
+          name="{{ data.name }}" fieldSize="medium" placeholder="{{ data.name }}" class="dis-block"
+          [(ngModel)]="data.value" [status]="error ? 'danger' : 'basic'" />
 
-        <textarea
-          *ngIf="data.inputType === 'textarea'"
-          nbInput
-          fullWidth
-          formControlName ="data.value"
-          name="{{ data.name }}"
-          placeholder="{{ data.name }}"
-        ></textarea>
+        <textarea *ngIf="data.inputType === 'textarea'" nbInput fullWidth [(ngModel)]="data.value"
+          name="{{ data.name }}" placeholder="{{ data.name }}"></textarea>
         <span *ngIf="data.inputType === 'date'">
-          <input
-            nbInput
-            placeholder="{{ data.name }}"
-            class="dis-block"
-            fullWidth
-            formControlName ="data.value"
-            name="{{ data.name }}"
-            [nbDatepicker]="ddd_1"
-          />
+          <input nbInput placeholder="{{ data.name }}" class="dis-block" fullWidth [(ngModel)]="data.value"
+            name="{{ data.name }}" [nbDatepicker]="ddd_1" />
           <nb-datepicker #ddd_1></nb-datepicker>
         </span>
       </div>
