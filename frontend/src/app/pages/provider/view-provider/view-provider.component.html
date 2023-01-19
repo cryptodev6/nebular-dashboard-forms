@@ -1,0 +1,22 @@
+<nb-card>
+  <nb-card-header>View Provider</nb-card-header>
+  <nb-card-body>
+    <label class="search-label" for="search">Search:</label>
+    <input nbInput [nbFilterInput]="dataSource" id="search"
+      class="search-input">
+    
+      <table [nbTreeGrid]="dataSource">
+
+        <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+        <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+        <ng-container *ngFor="let column of defaultColumns; let index = index"
+                    [nbTreeGridColumnDef]="column"
+                    >
+        <th nbTreeGridHeaderCell  *nbTreeGridHeaderCellDef>
+          {{headerColumns[index]}}
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '-'}}</td>
+      </ng-container>
+      </table>
+    </nb-card-body>
+</nb-card>
