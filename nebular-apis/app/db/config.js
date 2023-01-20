@@ -3,8 +3,8 @@ const mysql = require('mysql');
 const dbcon = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
-    database: 'nebulat_dsh'
+    password: 'DB!curAeL121og!ygf@@@$$',
+    database: 'nebulatDsh_api'
 })
 
 dbcon.connect(function (err, res) {

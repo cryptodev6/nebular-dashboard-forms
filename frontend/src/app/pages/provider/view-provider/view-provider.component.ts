@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NbSortDirection, NbSortRequest, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
+import { Component, OnInit, Input, TemplateRef } from '@angular/core';
+import { NbDialogService, NbIconConfig, NbSortDirection, NbSortRequest, NbToastrService, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { DeclarationService } from '../../../service/declaration.service';
 
 interface TreeNode<T> {
@@ -31,10 +31,10 @@ interface PRDEntry {
 })
 export class ViewProviderComponent implements OnInit {
   
-  defaultColumns = [ 'codigo_proveedor','codigo_padre', 'razon_social', 'ciudades', 'pais', 'ciudad', 'telefono', 'cuenta'];
+  defaultColumns = [ 'codigo_proveedor','codigo_padre', 'razon_social', 'ciudades', 'pais', 'ciudad', 'telefono', 'cuenta','Action',];
   allColumns = [ ...this.defaultColumns ];
   headerColumns = [
-    'Codigo proveedor', 'Codigo padre', 'Razon social', 'Ciudades', 'Pais', 'Direccion', 'Ciudad', 'Telefono', 'Cuenta'
+    'Codigo proveedor', 'Codigo padre', 'Razon social', 'Ciudades', 'Pais', 'Ciudad', 'Telefono', 'Cuenta','Action',
   ];
   result :any
   dataSource: NbTreeGridDataSource<PRDEntry>;
@@ -43,7 +43,8 @@ export class ViewProviderComponent implements OnInit {
   sortDirection: NbSortDirection = NbSortDirection.NONE;
   data: any;
 
-  constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<PRDEntry>,private declareList: DeclarationService,) {
+  constructor(private dialogService: NbDialogService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<PRDEntry>,
+    private declareList: DeclarationService,private toastrService: NbToastrService) {
     this.getData()
   }
 
@@ -74,13 +75,48 @@ export class ViewProviderComponent implements OnInit {
         this.result = result.body;
         let mappedData:TreeNode<PRDEntry>[] = []
         if(this.result.length) {
+          this.result.map(o => o.Action = '')
           this.result.map(item => {
             mappedData.push({data : item});
           })
         }
         this.dataSource = this.dataSourceBuilder.create(mappedData);
+        console.log(mappedData);
+        
       },
       (error: any) => console.log(error.message)
     );
+  }
+
+  open(dialog: TemplateRef<any>, row:any) {
+    this.dialogService.open(dialog, { context: row });
+  }
+
+  DelRow(id, ref:any){
+    const iconPrimaryConfig: NbIconConfig = {
+      icon: 'done-all-outline',
+      pack: 'eva',
+      status: 'primary',
+    };
+    const iconDangerConfig: NbIconConfig = {
+      icon: 'alert-circle-outline',
+      pack: 'eva',
+      status: 'danger',
+    };
+    let body={
+      id:id
+    }
+
+    this.declareList.deleteProveedors(body).subscribe((res)=>{
+      console.log('Cell Deleted');
+      this.toastrService.show('Row Deleted', res.msg, iconPrimaryConfig);
+      this.getData();
+      if(ref) {
+        ref.close();
+      }
+    },
+    (error: any) => {
+      this.toastrService.show('Error', error, iconDangerConfig);
+    })
   }
 }

@@ -1,5 +1,5 @@
 <nb-card>
-  <nb-card-header>Create Provider</nb-card-header>
+  <nb-card-header>{{headerTxt}}</nb-card-header>
   <nb-card-body class="example-items-col mt-2">
     <form
       name="createProviderForm" #createProviderForm
@@ -14,17 +14,27 @@
       >
         <label for="declaration">{{ data.title }}</label>
         <nb-select
-          *ngIf="data.inputType === 'list'"
-          placeholder="{{ data.title }}"
+          *ngIf="data.inputType === 'list' && data.title === 'Pais'"
+          placeholder="{{ data.title }}" (selectedChange)="pickCountry($event)"
           [(ngModel)] ="data.value" required
-          class="dis-block" [status]="!data.value && error ? 'danger' : 'basic'"
+          class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'"
           fullWidth
           name="{{ data.name }}" 
         >
-          <nb-option value="1">Option 1</nb-option>
-          <nb-option value="2">Option 2</nb-option>
-          <nb-option value="3">Option 3</nb-option>
-          <nb-option value="4">Option 4</nb-option>
+        <nb-option value="">Select Value</nb-option>
+          <nb-option *ngFor="let opt of countryList" [value]="opt.countryId">{{opt.name}}</nb-option>
+        </nb-select>
+
+        <nb-select
+          *ngIf="data.inputType === 'list' && data.title === 'Ciudades'"
+          placeholder="{{ data.title }}"
+          [(ngModel)] ="data.value" required
+          class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'"
+          fullWidth
+          name="{{ data.name }}" 
+        >
+          <nb-option value="">Select Value</nb-option>
+          <nb-option *ngFor="let opt of pickedStates" [value]="opt.id">{{opt.name}}</nb-option>
         </nb-select>
 
         <input
@@ -74,7 +84,7 @@
 
       </div>
 
-      <button nbButton status="primary" type="submit">Submit</button>
+      <button nbButton status="primary" type="submit" class="btn">{{id ? 'Update' : 'Submit'}}</button>
     </form>
   </nb-card-body>
 </nb-card>

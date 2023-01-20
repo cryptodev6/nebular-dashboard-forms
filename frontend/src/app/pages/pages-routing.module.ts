@@ -48,6 +48,10 @@ const routes: Routes = [{
           path: 'view-purchase',
           component: ViewPurchaseComponent,
         },
+        {
+          path:'edit-purchase/:id',
+          component:CreatePurchaseComponent
+        }
       ],
     },
     {
@@ -66,6 +70,10 @@ const routes: Routes = [{
           path: 'view-provider',
           component: ViewProviderComponent,
         },
+        {
+          path:'edit-provider/:id',
+          component:CreateProviderComponent
+        }
       ],
     },
     {

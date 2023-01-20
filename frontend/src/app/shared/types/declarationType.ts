@@ -5,4 +5,5 @@ export class declarationType{
   width: number | undefined
   value: any
   required?: string
+  options?:any[]
 }

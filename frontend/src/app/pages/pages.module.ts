@@ -1,7 +1,7 @@
 import { FormsModule } from '@angular/forms';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NgModule } from '@angular/core';
-import { NbLayoutModule, NbMenuModule, NbThemeModule, NbInputModule, NbCardModule, NbSelectModule, NbDatepickerModule, NbButtonModule, NbToastrModule, NbTreeGridModule, NbCheckboxModule } from '@nebular/theme';
+import { NbLayoutModule, NbMenuModule, NbThemeModule, NbInputModule, NbCardModule, NbSelectModule, NbDatepickerModule, NbButtonModule, NbToastrModule, NbTreeGridModule, NbCheckboxModule, NbAutocompleteModule, NbDialogModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
@@ -18,9 +18,11 @@ import { ViewProviderComponent } from './provider/view-provider/view-provider.co
 import { CreateBuyersComponent } from './buyers/create-buyers/create-buyers.component';
 import { ViewBuyersComponent } from './buyers/view-buyers/view-buyers.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [
+    CommonModule,
     PagesRoutingModule,
     ThemeModule,
     NbMenuModule,
@@ -31,7 +33,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     NbEvaIconsModule,
     NbInputModule,
     NbCardModule,
+    NbAutocompleteModule,
     NbSelectModule,
+    NbDialogModule.forRoot(),
     NbDatepickerModule.forRoot(),
     NbButtonModule,
     FormsModule,
