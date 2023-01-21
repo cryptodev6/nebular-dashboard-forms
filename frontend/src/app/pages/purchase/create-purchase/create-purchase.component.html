@@ -1,0 +1,99 @@
+<nb-card>
+  <nb-card-header>{{headerTxt}}</nb-card-header>
+  <nb-card-body class="example-items-col mt-2">
+    <form
+      name="createProviderForm" #createProviderForm
+      class="dis-flex just-between align-start"
+      (ngSubmit)="onSubmit(createProviderForm)"
+    >
+      <div
+        class="p-1"
+        [class.w-25]="data.width === 25"
+        [class.w-75]="data.width === 75"
+        *ngFor="let data of formFeildList; let i = index"
+      >
+        <label for="declaration">{{ data.title }}</label>
+
+        <input
+          *ngIf="data.inputType === 'text'"
+          type="text"
+          nbInput
+          fullWidth
+          [(ngModel)] ="data.value" required
+          name="{{ data.name }}"
+          fieldSize="medium"
+          placeholder="{{ data.title }}"
+          class="dis-block" [status]="!data.value && error ? 'danger' : 'basic'"
+        />
+
+        <span *ngIf="data.inputType === 'date' && data.name == 'CP'">
+          <input
+            nbInput
+            placeholder="{{ data.title }}"
+            class="dis-block" [status]="!data.value && error ? 'danger' : 'basic'"
+            fullWidth
+            [(ngModel)] ="data.value" required
+            name="{{ data.name }}"
+            [nbDatepicker]="ddd_1"
+          />
+          <nb-datepicker #ddd_1></nb-datepicker>
+        </span>
+        <span class="text-danger" *ngIf="!data.value && error">{{data.title + data.required}}</span>
+
+        <nb-select
+        *ngIf="data.name == 'proveedor'"
+        placeholder="{{ data.title }}"
+        [(ngModel)] ="data.value" required
+        class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'"
+        fullWidth  (selectedChange)="pickProvider($event)"
+        name="{{ data.name }}" 
+      >
+        <nb-option value="">Select Value</nb-option>
+        <nb-option  *ngFor="let opt of result" [value]="opt.id">{{opt.codigo_proveedor}}</nb-option>
+      </nb-select>
+        
+      <nb-select
+        *ngIf="data.name == 'adquiridas_a_titulo'"
+        placeholder="{{ data.title }}"
+        [(ngModel)] ="data.value" required
+        class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'"
+        fullWidth
+        name="{{ data.name }}" 
+      >
+        <nb-option value="">Select Value</nb-option>
+        <nb-option value="compra">compra</nb-option>
+        <nb-option value="venta">venta</nb-option>
+      </nb-select>
+      
+      <nb-select
+        *ngIf="data.name == 'tipo_de_compra'"
+        placeholder="{{ data.title }}"
+        [(ngModel)] ="data.value" required
+        class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'"
+        fullWidth
+        name="{{ data.name }}" 
+      >
+        <nb-option value="">Select Value</nb-option>
+        <nb-option value="1">Option 1</nb-option>
+        <nb-option value="2">Option 2</nb-option>
+      </nb-select>
+
+      <nb-select
+        *ngIf="data.name == 'fecha_CP'"
+        placeholder="{{ data.title }}"
+        [(ngModel)] ="data.value" required
+        class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'"
+        fullWidth
+        name="{{ data.name }}" 
+      >
+        <nb-option value="">Select Value</nb-option>
+        <nb-option value="1">Option 1</nb-option>
+        <nb-option value="2">Option 2</nb-option>
+      </nb-select>
+
+      </div>
+
+      <button nbButton status="primary" type="submit" class="btn">{{id ? 'Update' : 'Submit'}}</button>
+    </form>
+  </nb-card-body>
+</nb-card>
