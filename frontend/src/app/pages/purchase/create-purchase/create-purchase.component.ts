@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NbIconConfig, NbToastrService } from '@nebular/theme';
 import { DeclarationService } from '../../../service/declaration.service';
 import { declarationType } from '../../../shared/types/declarationType';
+import { jqxDropDownButtonComponent } from 'jqwidgets-ng/jqxdropdownbutton';
+import { jqxGridComponent } from 'jqwidgets-ng/jqxgrid';
 
 @Component({
   selector: 'ngx-create-purchase',
@@ -11,48 +13,60 @@ import { declarationType } from '../../../shared/types/declarationType';
   styleUrls: ['./create-purchase.component.scss']
 })
 export class CreatePurchaseComponent implements OnInit {
-
   formFeildList: declarationType[] | undefined;
   x: any;
   Pais: any;
-  id:any
+  id: any
   error: boolean = false;
   createProviderForm!: NgForm;
-  headerTxt:any;
+  headerTxt: any;
   update: any;
-
-  body:any= {
-    codigo_auxiliar:'',
-    numero_facture:'',
-    fecha_compra:'',
-    proveedor:'',
-    percentage_desc:'',
-    compania:'west metals',
-    adquiridas_a_titulo:'',
-    CP:'',
-    fecha_CP:'',
-    tipo_de_compra:'',
-    resolucion:'',
-    fecha_pago:'',
-    ciudad_regalias:''
+  body: any = {
+    codigo_auxiliar: '',
+    numero_facture: '',
+    fecha_compra: '',
+    proveedor: '',
+    percentage_desc: '',
+    compania: 'west metals',
+    adquiridas_a_titulo: '',
+    CP: '',
+    fecha_CP: '',
+    tipo_de_compra: '',
+    resolucion: '',
+    fecha_pago: '',
+    ciudad_regalias: ''
   }
   resData: any;
   countryList: any;
-  statelist: any[] =[];
-  pickedStates:any[] =[];
+  statelist: any[] = [];
+  pickedStates: any[] = [];
   result: any;
   selectedValuedata: any;
+  proveedorSource: any;
+  dataAdapter: any;
+  @ViewChild('providerGrid', { static: false }) providerGrid: jqxGridComponent;
+  @ViewChild('providerDropdownButton', { static: false }) providerDropdownButton: jqxDropDownButtonComponent;
+  columns: any[] =
+    [
+      { text: 'codigo proveedor', datafield: 'codigo_proveedor' },
+      { text: 'codigo padre', datafield: 'codigo_padre' },
+      { text: 'razon social', datafield: 'razon_social' },
+      { text: 'ciudades', datafield: 'ciudades' },
+      { text: 'pais', datafield: 'pais' },
+      { text: 'direccion', datafield: 'direccion' },
+      { text: 'ciudad', datafield: 'ciudad' },
+      { text: 'telefono', datafield: 'telefono' }
+    ];
 
-  constructor( private declareList: DeclarationService, private route: ActivatedRoute,
+  constructor(private declareList: DeclarationService, private route: ActivatedRoute,
     private toastrService: NbToastrService) {
-      this.route.params.subscribe(
-        res => {
-          if (res) {
-            console.log('route',res.id);
-            this.id = res.id
-          }
+    this.route.params.subscribe(
+      res => {
+        if (res) {
+          this.id = res.id
         }
-      )
+      }
+    )
     this.formFeildList = [
       {
         name: 'codigo_auxiliar',
@@ -60,7 +74,7 @@ export class CreatePurchaseComponent implements OnInit {
         inputType: 'text',
         width: 25,
         value: '',
-        required:' Required'
+        required: ' Required'
       },
       {
         name: 'numero_facture',
@@ -68,7 +82,7 @@ export class CreatePurchaseComponent implements OnInit {
         inputType: 'text',
         width: 25,
         value: '',
-        required:' Required'
+        required: ' Required'
       },
       {
         name: 'fecha_compra',
@@ -76,7 +90,7 @@ export class CreatePurchaseComponent implements OnInit {
         inputType: 'text',
         width: 25,
         value: '',
-        required:' Required'
+        required: ' Required'
       },
       {
         name: 'proveedor',
@@ -84,7 +98,7 @@ export class CreatePurchaseComponent implements OnInit {
         inputType: 'list',
         width: 25,
         value: '',
-        required:' Required',
+        required: ' Required',
         options: []
       },
       {
@@ -93,7 +107,7 @@ export class CreatePurchaseComponent implements OnInit {
         inputType: 'text',
         width: 25,
         value: '',
-        required:' Required'
+        required: ' Required'
       },
       {
         name: 'compania',
@@ -101,7 +115,7 @@ export class CreatePurchaseComponent implements OnInit {
         inputType: 'text',
         width: 25,
         value: 'west metals',
-        required:' Required'
+        required: ' Required'
       },
       {
         name: 'adquiridas_a_titulo',
@@ -109,8 +123,8 @@ export class CreatePurchaseComponent implements OnInit {
         inputType: 'list',
         width: 25,
         value: '',
-        required:' Required',
-        options:[]
+        required: ' Required',
+        options: []
       },
       {
         name: 'CP',
@@ -118,7 +132,7 @@ export class CreatePurchaseComponent implements OnInit {
         inputType: 'date',
         width: 25,
         value: '',
-        required:' Required'
+        required: ' Required'
       },
       {
         name: 'fecha_CP',
@@ -126,8 +140,8 @@ export class CreatePurchaseComponent implements OnInit {
         inputType: 'list',
         width: 25,
         value: '',
-        required:' Required',
-        options:[]
+        required: ' Required',
+        options: []
       },
       {
         name: 'tipo_de_compra',
@@ -135,8 +149,8 @@ export class CreatePurchaseComponent implements OnInit {
         inputType: 'list',
         width: 25,
         value: '',
-        required:' Required',
-        options:[]
+        required: ' Required',
+        options: []
       },
       {
         name: 'resolucion',
@@ -144,28 +158,28 @@ export class CreatePurchaseComponent implements OnInit {
         inputType: 'text',
         width: 25,
         value: '',
-        required:' Required'
+        required: ' Required'
       },
     ]
   }
 
   ngOnInit(): void {
     this.getData();
-    if(this.id !=undefined){
+    if (this.id != undefined) {
       this.headerTxt = 'Edit Purchase';
     }
-    else{
+    else {
       this.headerTxt = 'Create Purchase'
     }
   }
 
-  validationcheck(){
+  validationcheck() {
     let invalidField = this.formFeildList?.filter((ele: declarationType) => !ele.value);
     return invalidField.length;
   }
-  
+
   onSubmit(f: any) {
-    if(this.validationcheck()) {
+    if (this.validationcheck()) {
       return this.error = true;
     }
     const iconPrimaryConfig: NbIconConfig = {
@@ -180,7 +194,7 @@ export class CreatePurchaseComponent implements OnInit {
     };
 
     this.formFeildList?.forEach((ele: declarationType) => {
-       this.body[ele.name] = ele.value?? '';
+      this.body[ele.name] = ele.value ?? '';
     });
 
     this.declareList.addPurchase(this.body).subscribe(
@@ -188,39 +202,85 @@ export class CreatePurchaseComponent implements OnInit {
         this.toastrService.show('Successfully Added', result.msg, iconPrimaryConfig);
       },
       (error: any) => {
-        this.toastrService.show('Required s are missing', error, iconDangerConfig);
+        this.toastrService.show('Required fields are missing', error, iconDangerConfig);
       }
     );
     this.error = false;
     f.reset();
-
+    this.providerDropdownButton.setContent('');
+    this.providerGrid.clearselection();
   }
-  
-  getData(){
+
+  public getData() {
     this.declareList.getDeclareData().subscribe(
       (result: any) => {
         this.result = result.body;
+        // Prepare Source
+        this.proveedorSource = {
+          localdata: this.result,
+          datafields:
+            [
+              { name: 'id', type: 'number' },
+              { name: 'codigo_proveedor', type: 'string' },
+              { name: 'codigo_padre', type: 'string' },
+              { name: 'razon_social', type: 'string' },
+              { name: 'ciudades', type: 'string' },
+              { name: 'pais', type: 'string' },
+              { name: 'direccion', type: 'string' },
+              { name: 'ciudad', type: 'string' },
+              { name: 'telefono', type: 'string' }
+            ],
+          datatype: 'array'
+        };
+        this.dataAdapter = new jqx.dataAdapter(this.proveedorSource);
+        // this.ready();
       },
       (error: any) => console.log(error.msg)
     );
   }
 
-  pickProvider(event:any){
-    console.log('dsfg',event);
-    this.result.forEach(item =>{
-      if( item.id == event){
-        this.selectedValuedata = item
-        // this.body['CP'] = item.updated_at
-      }
-      this.formFeildList.forEach((item:any)=>{
-        
-        if(item.name == 'CP'){
-          console.log(item);
+  // pickProvider(event: any) {
+  //   this.result.forEach(item => {
+  //     if (item.id == event) {
+  //       this.selectedValuedata = item
+  //     }
+  //     this.formFeildList.forEach((item: any) => {
+  //       if (item.name == 'CP') {
+  //         console.log(item);
+  //         item.value = this.selectedValuedata.updated_at
+  //       }
+  //     });
+  //   });
+  // }
+
+  public providerGridOnRowSelect(event: any): void {
+    let args = event.args;
+    let row = this.providerGrid.getrowdata(args.rowindex);
+    console.log('selected row: ', row);
+    if (row) {
+      let dropDownContent = '<div style="position: relative; margin-left: 3px; margin-top: 5px;">' + row['codigo_proveedor'] + '</div>';
+      this.providerDropdownButton.setContent(dropDownContent);
+      this.selectedValuedata = row;
+      this.formFeildList.forEach((item: any) => {
+        if (item.name == 'CP' && this.selectedValuedata.updated_at) {
           item.value = this.selectedValuedata.updated_at
         }
-      })
-    })
-    
+        else if (item.name === 'proveedor') {
+          item.value = row['codigo_proveedor'];
+        }
+      });
+      this.body.proveedor = row['codigo_proveedor'];
+    }
   }
-  
+
+  public getWidth(): any {
+    if (document.body.offsetWidth < 850) {
+      return '90%';
+    }
+    return 850;
+  }
+
+  public ready = (): void => {
+    this.providerGrid.selectrow(0);
+  }
 }
