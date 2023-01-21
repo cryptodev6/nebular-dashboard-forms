@@ -1,9 +1,9 @@
-export class declarationType{
-  name: string =""
+export class declarationType {
+  name: string = ""
   title: string | undefined
   inputType: string | undefined
   width: number | undefined
   value: any
   required?: string
-  options?:any[]
+  options?: any[]
 }

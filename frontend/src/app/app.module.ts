@@ -44,7 +44,7 @@ import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
     ThemeModule.forRoot(),
     ReactiveFormsModule,
     jqxDropDownButtonModule,
-    jqxGridModule
+    jqxGridModule,
   ],
   bootstrap: [AppComponent],
 })

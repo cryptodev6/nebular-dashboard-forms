@@ -7,19 +7,19 @@ interface TreeNode<T> {
 }
 
 interface PRDEntry {
-  codigo_auxiliar:any,
-  numero_facture:any,
-  fecha_compra:any,
-  codigo_proveedor:any,
-  percentage_desc:any,
-  compania:any,
-  adquiridas_a_titulo:any,
-  CP:any,
-  fecha_CP:any,
-  tipo_de_compra:any,
-  is_deleted:any,
-  resolucion:any,
-  updated_at:any,
+  codigo_auxiliar: any,
+  numero_facture: any,
+  fecha_compra: any,
+  codigo_proveedor: any,
+  percentage_desc: any,
+  compania: any,
+  adquiridas_a_titulo: any,
+  CP: any,
+  fecha_CP: any,
+  tipo_de_compra: any,
+  is_deleted: any,
+  resolucion: any,
+  updated_at: any,
 }
 
 @Component({
@@ -29,14 +29,14 @@ interface PRDEntry {
 })
 export class ViewPurchaseComponent implements OnInit {
 
-  defaultColumns = [ 
-    'codigo_auxiliar','numero_facture', 'fecha_compra', 'percentage_desc', 'compania', 'adquiridas_a_titulo','Action',
+  defaultColumns = [
+    'codigo_auxiliar', 'numero_facture', 'fecha_compra', 'percentage_desc', 'compania', 'adquiridas_a_titulo', 'Action',
   ];
-  allColumns = [ ...this.defaultColumns ];
+  allColumns = [...this.defaultColumns];
   headerColumns = [
-    'Codigo Auxiliar', 'Numero Facture', 'Fecha Compra', 'Proveedor','% descuento a valor de IVA','Compania', 'Adquiridas a Titulo','Action',
+    'Codigo Auxiliar', 'Numero Facture', 'Fecha Compra', 'Proveedor', '% descuento a valor de IVA', 'Compania', 'Adquiridas a Titulo', 'Action',
   ];
-  result :any
+  result: any
   dataSource: NbTreeGridDataSource<PRDEntry>;
 
   sortColumn: string;
@@ -44,7 +44,7 @@ export class ViewPurchaseComponent implements OnInit {
   data: any;
 
   constructor(private dialogService: NbDialogService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<PRDEntry>,
-    private declareList: DeclarationService,private toastrService: NbToastrService) {
+    private declareList: DeclarationService, private toastrService: NbToastrService) {
     this.getData()
   }
 
@@ -69,30 +69,30 @@ export class ViewPurchaseComponent implements OnInit {
     return minWithForMultipleColumns + (nextColumnStep * index);
   }
 
-  getData(){
+  getData() {
     this.declareList.getPurchase().subscribe(
       (result: any) => {
         this.result = result.body;
-        let mappedData:TreeNode<PRDEntry>[] = []
-        if(this.result.length) {
+        let mappedData: TreeNode<PRDEntry>[] = []
+        if (this.result.length) {
           this.result.map(o => o.Action = '')
           this.result.map(item => {
-            mappedData.push({data : item});
+            mappedData.push({ data: item });
           })
         }
         this.dataSource = this.dataSourceBuilder.create(mappedData);
         console.log(mappedData);
-        
+
       },
       (error: any) => console.log(error.msg)
     );
   }
 
-  open(dialog: TemplateRef<any>, row:any) {
+  open(dialog: TemplateRef<any>, row: any) {
     this.dialogService.open(dialog, { context: row });
   }
 
-  DelRow(id, ref:any){
+  DelRow(id, ref: any) {
     const iconPrimaryConfig: NbIconConfig = {
       icon: 'done-all-outline',
       pack: 'eva',
@@ -103,21 +103,21 @@ export class ViewPurchaseComponent implements OnInit {
       pack: 'eva',
       status: 'danger',
     };
-    let body={
-      id:id
+    let body = {
+      id: id
     }
 
-    this.declareList.deletePurchase(body).subscribe((res)=>{
+    this.declareList.deletePurchase(body).subscribe((res) => {
       console.log('Cell Deleted');
       this.toastrService.show('Row Deleted', res.msg, iconPrimaryConfig);
       this.getData();
-      if(ref) {
+      if (ref) {
         ref.close();
       }
     },
-    (error: any) => {
-      this.toastrService.show('Error', error, iconDangerConfig);
-    })
+      (error: any) => {
+        this.toastrService.show('Error', error, iconDangerConfig);
+      })
   }
 
 }

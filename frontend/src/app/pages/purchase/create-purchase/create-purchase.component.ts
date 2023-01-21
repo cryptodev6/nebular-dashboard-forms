@@ -165,7 +165,7 @@ export class CreatePurchaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.getData();
-    if (this.id != undefined) {
+    if (this.id !== undefined) {
       this.headerTxt = 'Edit Purchase';
     }
     else {
