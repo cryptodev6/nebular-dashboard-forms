@@ -81,8 +81,6 @@ export class ViewPurchaseComponent implements OnInit {
           })
         }
         this.dataSource = this.dataSourceBuilder.create(mappedData);
-        console.log(mappedData);
-
       },
       (error: any) => console.log(error.msg)
     );

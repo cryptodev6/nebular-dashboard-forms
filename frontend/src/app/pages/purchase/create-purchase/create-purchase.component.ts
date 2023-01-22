@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NbIconConfig, NbToastrService } from '@nebular/theme';
@@ -6,13 +6,20 @@ import { DeclarationService } from '../../../service/declaration.service';
 import { declarationType } from '../../../shared/types/declarationType';
 import { jqxDropDownButtonComponent } from 'jqwidgets-ng/jqxdropdownbutton';
 import { jqxGridComponent } from 'jqwidgets-ng/jqxgrid';
+import { BaseComponent } from '../../../shared/components/base.component';
+import { BroadcastService } from '../../../shared/services/broadcast.service';
+import { RouteService } from '../../../shared/services/route.service';
+import { forkJoin, Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-create-purchase',
   templateUrl: './create-purchase.component.html',
-  styleUrls: ['./create-purchase.component.scss']
+  styleUrls: ['./create-purchase.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class CreatePurchaseComponent implements OnInit {
+export class CreatePurchaseComponent extends BaseComponent implements OnInit, OnDestroy {
+  public appSubscription: Subscription;
   formFeildList: declarationType[] | undefined;
   x: any;
   Pais: any;
@@ -22,6 +29,7 @@ export class CreatePurchaseComponent implements OnInit {
   headerTxt: any;
   update: any;
   body: any = {
+    id: 0,
     codigo_auxiliar: '',
     numero_facture: '',
     fecha_compra: '',
@@ -41,12 +49,17 @@ export class CreatePurchaseComponent implements OnInit {
   statelist: any[] = [];
   pickedStates: any[] = [];
   result: any;
-  selectedValuedata: any;
+  selectedProveedorData: any;
+  selectedAdquiridasData: any;
   proveedorSource: any;
-  dataAdapter: any;
+  adquiridasSource: any;
+  proveedorDataAdapter: any;
+  adquiridasDataAdapter: any;
   @ViewChild('providerGrid', { static: false }) providerGrid: jqxGridComponent;
   @ViewChild('providerDropdownButton', { static: false }) providerDropdownButton: jqxDropDownButtonComponent;
-  columns: any[] =
+  @ViewChild('adquiridasGrid', { static: false }) adquiridasGrid: jqxGridComponent;
+  @ViewChild('adquiridasDropdownButton', { static: false }) adquiridasDropdownButton: jqxDropDownButtonComponent;
+  providerColumns: any[] =
     [
       { text: 'codigo proveedor', datafield: 'codigo_proveedor' },
       { text: 'codigo padre', datafield: 'codigo_padre' },
@@ -57,16 +70,18 @@ export class CreatePurchaseComponent implements OnInit {
       { text: 'ciudad', datafield: 'ciudad' },
       { text: 'telefono', datafield: 'telefono' }
     ];
+  adquiridasColumns: any[] =
+    [
+      { text: 'name', datafield: 'name' }
+    ];
 
-  constructor(private declareList: DeclarationService, private route: ActivatedRoute,
-    private toastrService: NbToastrService) {
-    this.route.params.subscribe(
-      res => {
-        if (res) {
-          this.id = res.id
-        }
-      }
-    )
+  constructor(private declareList: DeclarationService,
+    private route: ActivatedRoute,
+    private toastrService: NbToastrService,
+    public broadCastService: BroadcastService,
+    public routeService: RouteService,) {
+    super(broadCastService, routeService);
+    this.id = this.route.snapshot.params.id;
     this.formFeildList = [
       {
         name: 'codigo_auxiliar',
@@ -75,6 +90,15 @@ export class CreatePurchaseComponent implements OnInit {
         width: 25,
         value: '',
         required: ' Required'
+      },
+      {
+        name: 'proveedor',
+        title: 'Proveedor',
+        inputType: 'list',
+        width: 25,
+        value: '',
+        required: ' Required',
+        options: []
       },
       {
         name: 'numero_facture',
@@ -91,15 +115,6 @@ export class CreatePurchaseComponent implements OnInit {
         width: 25,
         value: '',
         required: ' Required'
-      },
-      {
-        name: 'proveedor',
-        title: 'Proveedor',
-        inputType: 'list',
-        width: 25,
-        value: '',
-        required: ' Required',
-        options: []
       },
       {
         name: 'percentage_desc',
@@ -129,7 +144,7 @@ export class CreatePurchaseComponent implements OnInit {
       {
         name: 'CP',
         title: 'CP',
-        inputType: 'date',
+        inputType: 'number',
         width: 25,
         value: '',
         required: ' Required'
@@ -164,13 +179,81 @@ export class CreatePurchaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getData();
-    if (this.id !== undefined) {
-      this.headerTxt = 'Edit Purchase';
-    }
-    else {
-      this.headerTxt = 'Create Purchase'
-    }
+    const result = forkJoin({
+      proveedorList: this.declareList.getDeclareData()
+    });
+
+    this.appSubscription = result.subscribe((values) => {
+      let proveedorList = values["proveedorList"];
+      // Prepare Source
+      this.proveedorSource = {
+        localdata: proveedorList.body,
+        datafields:
+          [
+            { name: 'id', type: 'number' },
+            { name: 'codigo_proveedor', type: 'string' },
+            { name: 'codigo_padre', type: 'string' },
+            { name: 'razon_social', type: 'string' },
+            { name: 'ciudades', type: 'string' },
+            { name: 'pais', type: 'string' },
+            { name: 'direccion', type: 'string' },
+            { name: 'ciudad', type: 'string' },
+            { name: 'telefono', type: 'string' }
+          ],
+        datatype: 'array'
+      };
+      this.proveedorDataAdapter = new jqx.dataAdapter(this.proveedorSource);
+      this.providerDropdownButton.setContent('<div style="position: relative;margin-left:3px;margin-top:5px;">Select Proveedor</div>');
+
+      // Adquiridas List
+      this.adquiridasSource = {
+        localdata: [],
+        datafields:
+          [
+            { name: 'name', type: 'string' },
+          ],
+        datatype: 'array'
+      };
+      this.adquiridasDataAdapter = new jqx.dataAdapter(this.adquiridasSource);
+      this.adquiridasDropdownButton.setContent('<div style="position: relative;margin-left:3px;margin-top:5px;">Select Adquiridas A Titulo</div>');
+
+      if (this.id > 0) {
+        this.headerTxt = 'Edit Purchase';
+        this.declareList.getPurchaseById(this.id)
+          .pipe(finalize(() => { }))
+          .subscribe(result => {
+            if (result.body[0]) {
+              Object.keys(result.body[0]).forEach((purchaseItemKey: string) => {
+                this.formFeildList.forEach((item: any) => {
+                  if (item.name === purchaseItemKey) {
+                    item.value = result.body[0][purchaseItemKey];
+                  }
+                  if (item.name === 'adquiridas_a_titulo' && item.value) {
+                    let dropDownContent = '<div style="position: relative; margin-left: 3px; margin-top: 5px;">' + item.value + '</div>';
+                    this.adquiridasDropdownButton.setContent(dropDownContent);
+                    let selectedAdquiridasIndex = proveedorList.body.indexOf(x => x.codigo_proveedor === item.value);
+                    if (selectedAdquiridasIndex) {
+                      this.selectedAdquiridasData = proveedorList.body[selectedAdquiridasIndex];
+                    }
+                  }
+                  if (item.name === 'proveedor' && item.value) {
+                    let dropDownContent = '<div style="position: relative; margin-left: 3px; margin-top: 5px;">' + item.value + '</div>';
+                    this.providerDropdownButton.setContent(dropDownContent);
+                    let selectedProviderIndex = proveedorList.body.indexOf(x => x.codigo_proveedor === item.value);
+                    if (selectedProviderIndex) {
+                      this.selectedProveedorData = proveedorList.body[selectedProviderIndex];
+                      this.providerGrid.selectrow(selectedProviderIndex);
+                    }
+                  }
+                })
+              });
+            }
+          });
+      }
+      else{
+        this.headerTxt = 'Create Purchase'
+      }
+    });
   }
 
   validationcheck() {
@@ -197,73 +280,46 @@ export class CreatePurchaseComponent implements OnInit {
       this.body[ele.name] = ele.value ?? '';
     });
 
-    this.declareList.addPurchase(this.body).subscribe(
-      (result: any) => {
-        this.toastrService.show('Successfully Added', result.msg, iconPrimaryConfig);
-      },
-      (error: any) => {
-        this.toastrService.show('Required fields are missing', error, iconDangerConfig);
-      }
-    );
+    if (this.id > 0) {
+      this.body.id = parseInt(this.id);
+      this.declareList.updatePurchase(this.body).subscribe(
+        (result: any) => {
+          this.toastrService.show('Successfully Updated', result.msg, iconPrimaryConfig);
+        },
+        (error: any) => {
+          this.toastrService.show('Required fields are missing', error, iconDangerConfig);
+        }
+      );
+    }
+    else {
+      this.declareList.addPurchase(this.body).subscribe(
+        (result: any) => {
+          this.toastrService.show('Successfully Added', result.msg, iconPrimaryConfig);
+        },
+        (error: any) => {
+          this.toastrService.show('Required fields are missing', error, iconDangerConfig);
+        }
+      );
+    }
     this.error = false;
     f.reset();
     this.providerDropdownButton.setContent('');
     this.providerGrid.clearselection();
-  }
 
-  public getData() {
-    this.declareList.getDeclareData().subscribe(
-      (result: any) => {
-        this.result = result.body;
-        // Prepare Source
-        this.proveedorSource = {
-          localdata: this.result,
-          datafields:
-            [
-              { name: 'id', type: 'number' },
-              { name: 'codigo_proveedor', type: 'string' },
-              { name: 'codigo_padre', type: 'string' },
-              { name: 'razon_social', type: 'string' },
-              { name: 'ciudades', type: 'string' },
-              { name: 'pais', type: 'string' },
-              { name: 'direccion', type: 'string' },
-              { name: 'ciudad', type: 'string' },
-              { name: 'telefono', type: 'string' }
-            ],
-          datatype: 'array'
-        };
-        this.dataAdapter = new jqx.dataAdapter(this.proveedorSource);
-        // this.ready();
-      },
-      (error: any) => console.log(error.msg)
-    );
+    this.adquiridasDropdownButton.setContent('');
+    this.adquiridasGrid.clearselection();
   }
-
-  // pickProvider(event: any) {
-  //   this.result.forEach(item => {
-  //     if (item.id == event) {
-  //       this.selectedValuedata = item
-  //     }
-  //     this.formFeildList.forEach((item: any) => {
-  //       if (item.name == 'CP') {
-  //         console.log(item);
-  //         item.value = this.selectedValuedata.updated_at
-  //       }
-  //     });
-  //   });
-  // }
 
   public providerGridOnRowSelect(event: any): void {
     let args = event.args;
     let row = this.providerGrid.getrowdata(args.rowindex);
-    console.log('selected row: ', row);
     if (row) {
       let dropDownContent = '<div style="position: relative; margin-left: 3px; margin-top: 5px;">' + row['codigo_proveedor'] + '</div>';
       this.providerDropdownButton.setContent(dropDownContent);
-      this.selectedValuedata = row;
+      this.selectedProveedorData = row;
       this.formFeildList.forEach((item: any) => {
-        if (item.name == 'CP' && this.selectedValuedata.updated_at) {
-          item.value = this.selectedValuedata.updated_at
+        if (item.name == 'CP' && this.selectedProveedorData.updated_at) {
+          item.value = this.selectedProveedorData.updated_at
         }
         else if (item.name === 'proveedor') {
           item.value = row['codigo_proveedor'];
@@ -280,7 +336,26 @@ export class CreatePurchaseComponent implements OnInit {
     return 850;
   }
 
-  public ready = (): void => {
-    this.providerGrid.selectrow(0);
+  public adquiridasGridOnRowSelect(event: any): void {
+    let args = event.args;
+    let row = this.providerGrid.getrowdata(args.rowindex);
+    console.log('selected adquiridas: ', row);
+    if (row) {
+      let dropDownContent = '<div style="position: relative; margin-left: 3px; margin-top: 5px;">' + row['codigo_proveedor'] + '</div>';
+      this.adquiridasDropdownButton.setContent(dropDownContent);
+      this.selectedAdquiridasData = row;
+      this.formFeildList.forEach((item: any) => {
+        if (item.name === 'adquiridas_a_titulo') {
+          item.value = row['codigo_proveedor'];
+        }
+      });
+      this.body.proveedor = row['codigo_proveedor'];
+    }
+  }
+
+  public ngOnDestroy() {
+    if (this.appSubscription) {
+      this.appSubscription.unsubscribe();
+    }
   }
 }
