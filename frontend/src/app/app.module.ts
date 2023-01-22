@@ -21,6 +21,8 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 import { ReactiveFormsModule } from '@angular/forms';
+import { jqxDropDownButtonModule } from 'jqwidgets-ng/jqxdropdownbutton';
+import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,7 +42,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    jqxDropDownButtonModule,
+    jqxGridModule,
   ],
   bootstrap: [AppComponent],
 })

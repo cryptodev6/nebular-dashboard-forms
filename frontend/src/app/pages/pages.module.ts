@@ -19,6 +19,8 @@ import { CreateBuyersComponent } from './buyers/create-buyers/create-buyers.comp
 import { ViewBuyersComponent } from './buyers/view-buyers/view-buyers.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { jqxDropDownButtonModule } from 'jqwidgets-ng/jqxdropdownbutton';
+import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
 
 @NgModule({
   imports: [
@@ -42,7 +44,9 @@ import { CommonModule } from '@angular/common';
     NbToastrModule.forRoot(),
     ReactiveFormsModule,
     NbTreeGridModule,
-    NbCheckboxModule
+    NbCheckboxModule,
+    jqxDropDownButtonModule,
+    jqxGridModule
   ],
   declarations: [
     PagesComponent,
@@ -55,6 +59,7 @@ import { CommonModule } from '@angular/common';
     ViewProviderComponent,
     CreateBuyersComponent,
     ViewBuyersComponent,
+
   ],
 })
 export class PagesModule {
