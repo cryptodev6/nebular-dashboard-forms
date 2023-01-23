@@ -1,0 +1,37 @@
+{
+  "name": "Nebulat_dsh",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aes-js": "^3.1.2",
+    "axios": "^0.27.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "common": "^0.2.5",
+    "cors": "^2.8.5",
+    "cron": "^2.1.0",
+    "crypto-js": "^4.1.1",
+    "cryptr": "^6.0.2",
+    "express": "^4.17.3",
+    "http": "^0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.3",
+    "moment-timezone": "^0.5.37",
+    "mysql": "^2.18.1",
+    "node-cron": "^3.0.2",
+    "nodemon": "^2.0.15",
+    "pm2": "^5.2.0",
+    "request": "^2.88.2",
+    "sendgrid": "^5.2.3",
+    "twilio": "^3.71.2",
+    "uuid": "^8.3.2"
+  }
+}
