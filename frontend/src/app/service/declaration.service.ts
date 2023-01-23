@@ -1,13 +1,23 @@
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map, retry } from 'rxjs/operators';
+import { purchaseModel } from '../pages/purchase/models/purchase.model';
+import { BaseService } from '../shared/services/base.service';
 @Injectable({
   providedIn: 'root',
 })
-export class DeclarationService {
-  constructor(private http: HttpClient) {}
+export class DeclarationService extends BaseService {
+  public httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'responseType': 'json'
+    }),
+  };
+  constructor(private http: HttpClient) {
+    super();
+  }
 
   getDeclareData(): Observable<any> {
     const Url = `${environment.apiKEY}getProveedors`;
@@ -19,12 +29,12 @@ export class DeclarationService {
     return this.http.get<any>(Url);
   }
 
-  getProveedorsById(id:any): Observable<any> {
+  getProveedorsById(id: any): Observable<any> {
     const Url = `${environment.apiKEY}getProveedorsById?id=${id}`;
     return this.http.get<any>(Url);
   }
 
-  getPurchaseById(id:any): Observable<any> {
+  getPurchaseById(id: any): Observable<any> {
     const Url = `${environment.apiKEY}getPurchaseById?id=${id}`;
     return this.http.get<any>(Url);
   }
@@ -47,9 +57,14 @@ export class DeclarationService {
     return this.http.post<any>(Url, data).pipe(catchError(this.errorHandle));
   }
 
-  addPurchase(data: any): Observable<any> {
+  addPurchase(data: purchaseModel): Observable<any> {
     const Url = `${environment.apiKEY}addPurchase`;
-    return this.http.post<any>(Url, data).pipe(catchError(this.errorHandle));
+    return this.http.post<purchaseModel>(Url, data, this.httpOptions).pipe(catchError(this.errorHandle));
+  }
+
+  updatePurchase(data: purchaseModel): Observable<any> {
+    const Url = `${environment.apiKEY}editPurchase?id=` + data.id;
+    return this.http.post<purchaseModel>(Url, data, this.httpOptions).pipe(catchError(this.errorHandle));
   }
 
   deleteProveedors(data: any): Observable<any> {
@@ -63,7 +78,7 @@ export class DeclarationService {
   }
 
   errorHandle(error: HttpErrorResponse) {
-    // console.log('error', error.message);
+    console.log('error', error.message);
     return throwError(error || 'server error');
   }
 }

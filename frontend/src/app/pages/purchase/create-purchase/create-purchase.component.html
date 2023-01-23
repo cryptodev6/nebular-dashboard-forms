@@ -3,9 +3,22 @@
   <nb-card-body class="example-items-col mt-2">
     <form name="createProviderForm" #createProviderForm class="dis-flex just-between align-start"
       (ngSubmit)="onSubmit(createProviderForm)">
+      <input type="hidden" [(ngModel)]="id" name="id" />
       <div class="p-1" [class.w-25]="data.width === 25" [class.w-75]="data.width === 75"
         *ngFor="let data of formFeildList; let i = index">
         <label for="declaration">{{ data.title }}</label>
+
+        <jqxDropDownButton #providerDropdownButton placeholder="{{ data.title }}" name="{{ data.name }}"
+          *ngIf="data.name == 'proveedor'" required fullWidth>
+          <jqxGrid #providerGrid [theme]="'material'" (onRowselect)="providerGridOnRowSelect($event)"
+            [source]="proveedorDataAdapter" [columns]="providerColumns" [pageable]="true" [columnsresize]="true"
+            [autoheight]="true" [sortable]="true" [filterable]="true">
+          </jqxGrid>
+        </jqxDropDownButton>
+
+        <input *ngIf="data.inputType === 'number'" type="number" nbInput fullWidth [(ngModel)]="data.value" required
+          name="{{ data.name }}" fieldSize="medium" placeholder="{{ data.title }}" class="dis-block"
+          [status]="!data.value && error ? 'danger' : 'basic'" />
 
         <input *ngIf="data.inputType === 'text'" type="text" nbInput fullWidth [(ngModel)]="data.value" required
           name="{{ data.name }}" fieldSize="medium" placeholder="{{ data.title }}" class="dis-block"
@@ -19,26 +32,28 @@
         </span>
         <span class="text-danger" *ngIf="!data.value && error">{{data.title + data.required}}</span>
 
-        <jqxDropDownButton #providerDropdownButton placeholder="{{ data.title }}" name="{{ data.name }}" style="width:100%;" *ngIf="data.name == 'proveedor'" required fullWidth>
-          <jqxGrid #providerGrid [theme]="'material'" (onRowselect)="providerGridOnRowSelect($event)" [source]="dataAdapter"
-            [columns]="columns" [pageable]="true" [columnsresize]="true" [autoheight]="true" [sortable]="true" [filterable]="true" [autoshowfiltericon]="true" [adaptive]="true">
+        <jqxDropDownButton #adquiridasDropdownButton placeholder="{{ data.title }}" name="{{ data.name }}"
+          *ngIf="data.name == 'adquiridas_a_titulo'" required fullWidth>
+          <jqxGrid #adquiridasGrid [theme]="'material'" (onRowselect)="adquiridasGridOnRowSelect($event)"
+            [source]="adquiridasDataAdapter" [columns]="adquiridasColumns" [pageable]="true" [columnsresize]="true"
+            [autoheight]="true" [sortable]="true" [filterable]="true">
           </jqxGrid>
         </jqxDropDownButton>
 
-        <nb-select *ngIf="data.name == 'adquiridas_a_titulo'" placeholder="{{ data.title }}" [(ngModel)]="data.value"
+        <!-- <nb-select *ngIf="data.name == 'adquiridas_a_titulo'" placeholder="{{ data.title }}" [(ngModel)]="data.value"
           required class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'" fullWidth
           name="{{ data.name }}">
           <nb-option value="">Select Value</nb-option>
           <nb-option value="compra">compra</nb-option>
           <nb-option value="venta">venta</nb-option>
-        </nb-select>
+        </nb-select> -->
 
         <nb-select *ngIf="data.name == 'tipo_de_compra'" placeholder="{{ data.title }}" [(ngModel)]="data.value"
           required class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'" fullWidth
           name="{{ data.name }}">
           <nb-option value="">Select Value</nb-option>
-          <nb-option value="1">Option 1</nb-option>
-          <nb-option value="2">Option 2</nb-option>
+          <nb-option value="Compra con beneficios">Compra con beneficios</nb-option>
+          <nb-option value="Compra sin beneficios">Compra sin beneficios</nb-option>
         </nb-select>
 
         <nb-select *ngIf="data.name == 'fecha_CP'" placeholder="{{ data.title }}" [(ngModel)]="data.value" required

@@ -17,7 +17,6 @@ var User = function (list) {
 
 User.addProveedors = function (userData, result) {
     var data = {}
-    console.log(userData)
     var insertedData = {
         codigo_proveedor: userData.codigo_proveedor ? userData.codigo_proveedor : null,
         codigo_padre: userData.codigo_padre ? userData.codigo_padre : null,
@@ -220,7 +219,6 @@ User.getStates = function (getData, result) {
 }
 User.addPurchase = function (userData, result) {
     var data = {}
-    console.log(userData)
     var insertedData = {
         codigo_auxiliar: userData.codigo_auxiliar ? userData.codigo_auxiliar : null,
         numero_facture: userData.numero_facture ? userData.numero_facture : null,
@@ -240,7 +238,6 @@ User.addPurchase = function (userData, result) {
     sql.query("INSERT INTO `purchase` SET ? ", [insertedData], function (err, res) {
         if (err) {
             console.log(err)
-            console.log(err)
             data['error'] = true;
             data['msg'] = err.code;
             data['body'] = [];
@@ -258,7 +255,6 @@ User.addPurchase = function (userData, result) {
 }
 User.editPurchase = function (userData, result) {
     var data = {}
-    console.log(userData)
     sql.query("SELECT * from purchase WHERE id=?", [userData.id], (error, res) => {
         if (error) {
             data['error'] = true;
@@ -268,7 +264,7 @@ User.editPurchase = function (userData, result) {
         } else {
             if (res.length > 0) {
                 var updatedData = {
-                    codigo_proveedor: userData.codigo_proveedor ? userData.codigo_proveedor : res[0].codigo_proveedor,
+                    //codigo_proveedor: userData.codigo_proveedor ? userData.codigo_proveedor : res[0].codigo_proveedor,
                     codigo_auxiliar: userData.codigo_auxiliar ? userData.codigo_auxiliar : res[0].codigo_auxiliar,
                     numero_facture: userData.numero_facture ? userData.numero_facture : res[0].numero_facture,
                     fecha_compra: userData.fecha_compra ? userData.fecha_compra : res[0].fecha_compra,
