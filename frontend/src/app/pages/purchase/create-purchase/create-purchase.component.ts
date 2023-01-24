@@ -111,7 +111,7 @@ export class CreatePurchaseComponent extends BaseComponent implements OnInit, On
       {
         name: 'fecha_compra',
         title: 'Fecha Compra',
-        inputType: 'text',
+        inputType: 'date',
         width: 25,
         value: '',
         required: ' Required'
@@ -146,16 +146,16 @@ export class CreatePurchaseComponent extends BaseComponent implements OnInit, On
         title: 'CP',
         inputType: 'number',
         width: 25,
-        value: '',
-        required: ' Required'
+        value: '',               
+        
       },
       {
         name: 'fecha_CP',
         title: 'fecha CP',
-        inputType: 'list',
+        inputType: 'number',
         width: 25,
         value: '',
-        required: ' Required',
+       
         options: []
       },
       {
@@ -262,9 +262,11 @@ export class CreatePurchaseComponent extends BaseComponent implements OnInit, On
   }
 
   onSubmit(f: any) {
-    if (this.validationcheck()) {
-      return this.error = true;
-    }
+    
+    
+    // if (this.validationcheck()) {
+    //   return this.error = true;
+    // }
     const iconPrimaryConfig: NbIconConfig = {
       icon: 'done-all-outline',
       pack: 'eva',

@@ -1,5 +1,5 @@
 <nb-card>
-  <nb-card-header>Close Cycle</nb-card-header>
+  <nb-card-header>Ventas</nb-card-header>
   <nb-card-body class="example-items-col mt-2">
     <form
       name="createProviderForm"
@@ -253,17 +253,7 @@
           />
       </div>
 
-      <div
-        class="p-1"
-        [class.w-75]="25">
-        <label for="Documento">Documento</label>
-        <textarea
-          nbInput
-          fullWidth
-          placeholder="Textarea"
-          formControlName="Documento">
-        </textarea>
-      </div>
+     
 
       <div
         class="p-1"
@@ -298,6 +288,33 @@
           />
       </div>
 
+      <div
+        class="p-1"
+        [class.w-25]="25">
+        <label for="Compania">Visualizar ventas</label>
+        <input
+          type="text"
+          nbInput
+          fullWidth
+          formControlName="ventas"
+          name="Numero Factura"
+          fieldSize="medium"
+          placeholder="ventas"
+          class="dis-block"
+          />
+      </div>
+      
+      <div
+      class="p-1"
+      [class.w-75]="25">
+      <label for="Documento">Documento</label>
+      <textarea
+        nbInput
+        fullWidth
+        placeholder="Textarea"
+        formControlName="Documento">
+      </textarea>
+    </div>
       <div
         class="p-1 sybmit-area">
         <button nbButton status="info" type="submit">SUBMIT</button>

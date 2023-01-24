@@ -30,11 +30,11 @@ interface PRDEntry {
 export class ViewPurchaseComponent implements OnInit {
 
   defaultColumns = [
-    'codigo_auxiliar', 'numero_facture', 'fecha_compra', 'percentage_desc', 'compania', 'adquiridas_a_titulo', 'Action',
+    'codigo_auxiliar', 'numero_facture', 'fecha_compra', 'proveedor','percentage_desc', 'compania', 'adquiridas_a_titulo','CP', 'Action',
   ];
   allColumns = [...this.defaultColumns];
   headerColumns = [
-    'Codigo Auxiliar', 'Numero Facture', 'Fecha Compra', 'Proveedor', '% descuento a valor de IVA', 'Compania', 'Adquiridas a Titulo', 'Action',
+    'Codigo Auxiliar', 'Numero Facture', 'Fecha Compra', 'Proveedor', '% descuento a valor de IVA', 'Compania', 'Adquiridas a Titulo','CP', 'Action',
   ];
   result: any
   dataSource: NbTreeGridDataSource<PRDEntry>;

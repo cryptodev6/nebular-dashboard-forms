@@ -30,7 +30,13 @@ export class CreateProviderComponent implements OnInit {
     telefono:'',
     cuenta:'',
     fax:'',
-    contacts:''
+    contacts:'',
+    resolucion :'',
+    vencimiento :'',
+    prefijo:'',
+    desde :'',
+    hasta:'' 
+
   }
   resData: any;
   countryList: any;
@@ -123,6 +129,49 @@ export class CreateProviderComponent implements OnInit {
         value: '',
         required:' Required'
       },
+
+
+      {
+        name: 'resolucion',
+        title: 'Resolucion de facturación',
+        inputType: 'number',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+      {
+        name: 'vencimiento ',
+        title: 'Fecha de vencimiento',
+        inputType: 'date',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+      {
+        name: 'prefijo',
+        title: 'Prefijo ',
+        inputType: 'text',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+      {
+        name: 'desde',
+        title: 'Desde ',
+        inputType: 'text',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+      {
+        name: 'hasta',
+        title: 'Hasta',
+        inputType: 'text',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+
     ]
   }
 
@@ -170,6 +219,8 @@ export class CreateProviderComponent implements OnInit {
         this.toastrService.show('Required s are missing', error, iconDangerConfig);
       }
     );
+    console.log("ssssssss",this.declareList);
+    
     if(this.id !=undefined){
       this.declareList.editProveedors(this.body).subscribe(
         (result: any) => {

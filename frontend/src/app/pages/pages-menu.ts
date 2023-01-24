@@ -35,7 +35,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'Close cycle',
+    title: 'Crear Ventas',
     icon: 'keypad-outline',
     link: '/pages/close-cycle'
   },

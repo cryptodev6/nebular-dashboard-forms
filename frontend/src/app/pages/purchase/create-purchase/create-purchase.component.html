@@ -16,17 +16,17 @@
           </jqxGrid>
         </jqxDropDownButton>
 
-        <input *ngIf="data.inputType === 'number'" type="number" nbInput fullWidth [(ngModel)]="data.value" required
+        <input *ngIf="data.inputType === 'number'" type="number" nbInput fullWidth [(ngModel)]="data.value"
           name="{{ data.name }}" fieldSize="medium" placeholder="{{ data.title }}" class="dis-block"
-          [status]="!data.value && error ? 'danger' : 'basic'" />
+        disabled />
 
         <input *ngIf="data.inputType === 'text'" type="text" nbInput fullWidth [(ngModel)]="data.value" required
           name="{{ data.name }}" fieldSize="medium" placeholder="{{ data.title }}" class="dis-block"
           [status]="!data.value && error ? 'danger' : 'basic'" />
 
         <span *ngIf="data.inputType === 'date' && data.name == 'CP'">
-          <input nbInput placeholder="{{ data.title }}" class="dis-block"
-            [status]="!data.value && error ? 'danger' : 'basic'" fullWidth [(ngModel)]="data.value" required
+          <input nbInput placeholder="{{ data.title }}"  class="dis-block"
+            [status]="!data.value && error ? 'danger' : 'basic'" fullWidth [(ngModel)]="data.value" required 
             name="{{ data.name }}" [nbDatepicker]="ddd_1" />
           <nb-datepicker #ddd_1></nb-datepicker>
         </span>
@@ -51,17 +51,31 @@
         <nb-select *ngIf="data.name == 'tipo_de_compra'" placeholder="{{ data.title }}" [(ngModel)]="data.value"
           required class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'" fullWidth
           name="{{ data.name }}">
-          <nb-option value="">Select Value</nb-option>
+          <!-- <nb-option value="">Select Value</nb-option> -->
           <nb-option value="Compra con beneficios">Compra con beneficios</nb-option>
           <nb-option value="Compra sin beneficios">Compra sin beneficios</nb-option>
         </nb-select>
 
-        <nb-select *ngIf="data.name == 'fecha_CP'" placeholder="{{ data.title }}" [(ngModel)]="data.value" required
-          class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'" fullWidth name="{{ data.name }}">
-          <nb-option value="">Select Value</nb-option>
-          <nb-option value="1">Option 1</nb-option>
+        <span *ngIf="data.inputType === 'date'">
+          <input
+            nbInput
+            placeholder="Pick Date Range"
+            class="d-block m-0" fullWidth name="{{ data.name }}"
+            fullWidth
+            [(ngModel)]="data.value"
+            name="{{ data.name }}"
+            [nbDatepicker]="ddd_1"
+          />
+          <nb-datepicker #ddd_1></nb-datepicker>
+        </span>
+
+        <!-- <nb-select *ngIf="data.inputType == 'date'"><input
+          nbInput placeholder="{{ data.title }}" [(ngModel)]="data.value" required
+          class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'" fullWidth name="{{ data.name }}"> -->
+          <!-- <nb-option value="">Select Value</nb-option> -->
+          <!-- <nb-option value="1">Option 1</nb-option>
           <nb-option value="2">Option 2</nb-option>
-        </nb-select>
+        </nb-select> -->
 
       </div>
 

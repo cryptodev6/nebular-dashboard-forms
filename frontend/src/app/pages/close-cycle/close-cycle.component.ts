@@ -33,7 +33,8 @@ export class CloseCycleComponent implements OnInit {
       VelorOtrosGastos: new FormControl(''),
       Documento: new FormControl(''),
       CompaniaSel: new FormControl(''),
-      CompaniaDO: new FormControl('')
+      CompaniaDO: new FormControl(''),
+      ventas:new FormControl('')
     })
   }
 
