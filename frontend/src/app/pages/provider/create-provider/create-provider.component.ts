@@ -140,7 +140,7 @@ export class CreateProviderComponent implements OnInit {
         required:' Required'
       },
       {
-        name: 'vencimiento ',
+        name: 'vencimiento',
         title: 'Fecha de vencimiento',
         inputType: 'date',
         width: 25,
@@ -225,6 +225,8 @@ export class CreateProviderComponent implements OnInit {
       this.declareList.editProveedors(this.body).subscribe(
         (result: any) => {
           this.toastrService.show('Successfully Added', result.msg, iconPrimaryConfig);
+          console.log("ediitttttprooovider",result);
+          
         },
         (error: any) => {
           this.toastrService.show('Required s are missing', error, iconDangerConfig);

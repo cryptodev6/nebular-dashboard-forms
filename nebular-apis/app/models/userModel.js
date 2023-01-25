@@ -28,7 +28,13 @@ User.addProveedors = function (userData, result) {
         telefono: userData.telefono ? userData.telefono : null,
         cuenta: userData.cuenta ? userData.cuenta : null,
         fax: userData.fax ? userData.fax : null,
-        contacts: userData.contacts ? userData.contacts : null
+        contacts: userData.contacts ? userData.contacts : null,
+        hasta: userData.hasta ? userData.hasta : null,
+        desde: userData.desde ? userData.desde : null,
+        prefijo: userData.prefijo ? userData.prefijo : null,
+        resolucion: userData.resolucion ? userData.resolucion : null,
+        // vencimiento: userData.vencimiento ? userData.vencimiento : null,
+
     }
     sql.query("INSERT INTO `proveedors` SET ? ", [insertedData], function (err, res) {
         if (err) {
@@ -71,7 +77,11 @@ User.editProveedors = function (userData, result) {
                     telefono: userData.telefono ? userData.telefono : res[0].telefono,
                     cuenta: userData.cuenta ? userData.cuenta : res[0].cuenta,
                     fax: userData.fax ? userData.fax : res[0].fax,
-                    contacts: userData.contacts ? userData.contacts : res[0].contacts
+                    contacts: userData.contacts ? userData.contacts : res[0].contacts,
+                    hasta: userData.hasta ? userData.hasta : null,
+                    desde: userData.desde ? userData.desde : null,
+                    prefijo: userData.prefijo ? userData.prefijo : null,
+                    resolucion: userData.resolucion ? userData.resolucion : null,
                 }
                 sql.query("UPDATE proveedors SET ? WHERE id=?", [updatedData, userData.id], function (err, res1) {
                     console.log(sql)
@@ -227,7 +237,7 @@ User.addPurchase = function (userData, result) {
         percentage_desc: userData.percentage_desc ? userData.percentage_desc : null,
         compania: userData.compania ? userData.compania : null,
         adquiridas_a_titulo: userData.adquiridas_a_titulo ? userData.adquiridas_a_titulo : null,
-        CP: userData.CP ? userData.CP : null,
+        // CP: userData.CP ? userData.CP : null,
         fecha_CP: userData.fecha_CP ? userData.fecha_CP : null,
         tipo_de_compra: userData.tipo_de_compra ? userData.tipo_de_compra : null,
         resolucion: userData.resolucion ? userData.resolucion : null,
@@ -354,6 +364,7 @@ User.getPurchase = (userData, result) => {
             data['msg'] = error.code;
             data['body'] = [];
             result(null, data);
+            console.log("RESSS", result);
         } else {
 
             var page = {

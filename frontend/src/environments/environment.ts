@@ -10,5 +10,6 @@
 
 export const environment = {
   production: false,
-  apiKEY: "http://43.205.48.160:3049/"
+  // apiKEY: "http://43.205.48.160:3049/"
+  apiKEY: "http://localhost:3004/"
 };

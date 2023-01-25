@@ -30,7 +30,7 @@ interface PRDEntry {
 export class ViewPurchaseComponent implements OnInit {
 
   defaultColumns = [
-    'codigo_auxiliar', 'numero_facture', 'fecha_compra', 'proveedor','percentage_desc', 'compania', 'adquiridas_a_titulo','CP', 'Action',
+    'codigo_auxiliar', 'numero_facture', 'fecha_compra', 'proveedor','percentage_desc', 'compania', 'adquiridas_a_titulo','id', 'Action',
   ];
   allColumns = [...this.defaultColumns];
   headerColumns = [
@@ -75,6 +75,8 @@ export class ViewPurchaseComponent implements OnInit {
         this.result = result.body;
         let mappedData: TreeNode<PRDEntry>[] = []
         if (this.result.length) {
+          console.log("ssssssss",this.result);
+          
           this.result.map(o => o.Action = '')
           this.result.map(item => {
             mappedData.push({ data: item });

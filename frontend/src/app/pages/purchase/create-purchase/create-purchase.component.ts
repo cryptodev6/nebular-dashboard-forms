@@ -29,7 +29,7 @@ export class CreatePurchaseComponent extends BaseComponent implements OnInit, On
   headerTxt: any;
   update: any;
   body: any = {
-    id: 0,
+    id: '',
     codigo_auxiliar: '',
     numero_facture: '',
     fecha_compra: '',
@@ -37,8 +37,8 @@ export class CreatePurchaseComponent extends BaseComponent implements OnInit, On
     percentage_desc: '',
     compania: 'west metals',
     adquiridas_a_titulo: '',
-    CP: '',
-    fecha_CP: '',
+    // CP: '',
+    updated_at: '',
     tipo_de_compra: '',
     resolucion: '',
     fecha_pago: '',
@@ -72,7 +72,8 @@ export class CreatePurchaseComponent extends BaseComponent implements OnInit, On
     ];
   adquiridasColumns: any[] =
     [
-      { text: 'name', datafield: 'name' }
+      { text: 'Codigo', datafield: 'id' },
+      { text: 'Descripcion', datafield: 'codigo_proveedor' }
     ];
 
   constructor(private declareList: DeclarationService,
@@ -121,7 +122,7 @@ export class CreatePurchaseComponent extends BaseComponent implements OnInit, On
         title: '% descuento a valor de IVA',
         inputType: 'text',
         width: 25,
-        value: '',
+        value: '19 %',
         required: ' Required'
       },
       {
@@ -142,19 +143,19 @@ export class CreatePurchaseComponent extends BaseComponent implements OnInit, On
         options: []
       },
       {
-        name: 'CP',
+        name: 'id',
         title: 'CP',
         inputType: 'number',
         width: 25,
-        value: '',               
+        value: 'null',               
         
       },
       {
-        name: 'fecha_CP',
+        name: 'id',
         title: 'fecha CP',
         inputType: 'number',
         width: 25,
-        value: '',
+        value: 'null',
        
         options: []
       },
@@ -207,10 +208,11 @@ export class CreatePurchaseComponent extends BaseComponent implements OnInit, On
 
       // Adquiridas List
       this.adquiridasSource = {
-        localdata: [],
+        localdata: proveedorList.body,
         datafields:
           [
-            { name: 'name', type: 'string' },
+            { name: 'id', type: 'number' },
+            { name: 'codigo_proveedor', type: 'string' },
           ],
         datatype: 'array'
       };
@@ -264,9 +266,9 @@ export class CreatePurchaseComponent extends BaseComponent implements OnInit, On
   onSubmit(f: any) {
     
     
-    // if (this.validationcheck()) {
-    //   return this.error = true;
-    // }
+    if (this.validationcheck()) {
+      return this.error = true;
+    }
     const iconPrimaryConfig: NbIconConfig = {
       icon: 'done-all-outline',
       pack: 'eva',

@@ -73,6 +73,8 @@ export class ViewProviderComponent implements OnInit {
     this.declareList.getDeclareData().subscribe(
       (result: any) => {
         this.result = result.body;
+        console.log("proveeedooorrrrr",this.result);
+        
         let mappedData:TreeNode<PRDEntry>[] = []
         if(this.result.length) {
           this.result.map(o => o.Action = '')

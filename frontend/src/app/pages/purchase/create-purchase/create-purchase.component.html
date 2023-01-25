@@ -18,7 +18,7 @@
 
         <input *ngIf="data.inputType === 'number'" type="number" nbInput fullWidth [(ngModel)]="data.value"
           name="{{ data.name }}" fieldSize="medium" placeholder="{{ data.title }}" class="dis-block"
-        disabled />
+          [status]="!data.value && error ? 'danger' : 'basic'" disabled />
 
         <input *ngIf="data.inputType === 'text'" type="text" nbInput fullWidth [(ngModel)]="data.value" required
           name="{{ data.name }}" fieldSize="medium" placeholder="{{ data.title }}" class="dis-block"
