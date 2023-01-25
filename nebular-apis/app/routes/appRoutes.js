@@ -18,5 +18,10 @@ router.post('/editPurchase', userController.editPurchase);
 router.post('/deletePurchase', userController.deletePurchase);
 router.get('/getPurchase', userController.getPurchase);
 router.get('/getPurchaseById', userController.getPurchaseById);
-
+///////////////Ventas///////////////
+router.post('/addVentas', userController.addVentas);
+router.post('/editVentas', userController.editVentas);
+router.get('/getVentas', userController.getVentas);
+router.post('/deleteVentas', userController.deleteVentas);
+router.get('/getVentasById', userController.getVentasById);
 module.exports = router;

@@ -13,6 +13,7 @@ exports.addProveedors = function (req, res) {
             res.json(response);
         });
     } else {
+        let data = [];
         data['error'] = true;
         data['msg'] = 'All field required';
         data['body'] = [];
@@ -122,3 +123,61 @@ exports.getPurchaseById = function (req, res) {
     });
 
 };
+exports.addVentas = function (req, res) {
+    console.log('request: ', req);
+    var param = req.body
+    var data=[];
+    console.log("params***********", param)
+    if (req.param && !!param.codigoAuncliar) {
+        User.addVentas(param, function (err, response) {
+            if (err)
+                response.send(err);
+            res.json(response);
+        });
+    } else {
+        data['error'] = true;
+        data['msg'] = 'All field required';
+        data['body'] = '';
+        res.json(data);
+    }
+
+}
+exports.editVentas = function (req, res) {
+    var param = req.body
+    // console.log("params***********", param)
+    User.editPurchase(param, function (err, response) {
+        if (err)
+            return res.send(err);
+        return res.json(response);
+    });
+
+}
+exports.getVentas = function (req, res) {
+    var params = { ...req.query, ...req.params };
+    // console.log("params***********", params)
+    User.getVentas(params, function (err, response) {
+        if (err)
+            res.send(err);
+        res.json(response);
+    });
+
+};
+exports.getVentasById = function (req, res) {
+    var params = { ...req.query, ...req.params };
+    // console.log("params***********", params)
+    User.getVentasById(params, function (err, response) {
+        if (err)
+            res.send(err);
+        res.json(response);
+    });
+
+};
+exports.deleteVentas = function (req, res) {
+    var param = req.body
+    User.deleteVentas(param, function (err, response) {
+        if (err)
+            res.send(err);
+        res.json(response);
+    });
+
+}

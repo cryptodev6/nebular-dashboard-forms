@@ -35,9 +35,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'Crear Ventas',
+    title: 'Ventas',
     icon: 'keypad-outline',
-    link: '/pages/close-cycle'
+    // link: '/pages/close-cycle'
+    children:[
+      {
+        title: 'Crear Ventas',
+        link: '/pages/ventas/create-ventas',
+      },
+      {
+        title: 'Visualizar ventas',
+        link: '/pages/ventas/view-ventas',
+      }
+    ]
   },
   {
     title: 'Provider',

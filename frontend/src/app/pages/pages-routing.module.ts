@@ -13,6 +13,7 @@ import { NotFoundComponent } from './miscellaneous/not-found/not-found.component
 import { CreateProviderComponent } from './provider/create-provider/create-provider.component';
 import { ViewBuyersComponent } from './buyers/view-buyers/view-buyers.component';
 import { CloseCycleComponent } from './close-cycle/close-cycle.component';
+import { VisualizerComponent } from './visualizer/visualizer.component';
 
 const routes: Routes = [{
   path: '',
@@ -55,8 +56,22 @@ const routes: Routes = [{
       ],
     },
     {
-      path: 'close-cycle',
-      component: CloseCycleComponent,
+      path: 'ventas',
+      component: null,
+       children: [
+        {
+          path: 'create-ventas',
+          component: CloseCycleComponent,
+        },
+        {
+          path: 'view-ventas',
+          component: VisualizerComponent,
+        },
+        {
+          path:'edit-provider/:id',
+          component:CreateProviderComponent
+        }
+      ],
     },
     {
       path: 'provider',

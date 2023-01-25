@@ -21,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { jqxDropDownButtonModule } from 'jqwidgets-ng/jqxdropdownbutton';
 import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
+import { VisualizerComponent } from './visualizer/visualizer.component';
 
 @NgModule({
   imports: [
@@ -59,6 +60,7 @@ import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
     ViewProviderComponent,
     CreateBuyersComponent,
     ViewBuyersComponent,
+    VisualizerComponent,
 
   ],
 })

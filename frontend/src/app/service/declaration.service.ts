@@ -71,6 +71,31 @@ export class DeclarationService extends BaseService {
     const Url = `${environment.apiKEY}deleteProveedors`;
     return this.http.post<any>(Url, data);
   }
+  getVentasById(id: any): Observable<any> {
+    const Url = `${environment.apiKEY}getVentasById?id=${id}`;
+    return this.http.get<any>(Url);
+  }
+
+
+  addVentas(data: purchaseModel): Observable<any> {
+    const Url = `${environment.apiKEY}addVentas`;
+    return this.http.post<purchaseModel>(Url, data, this.httpOptions).pipe(catchError(this.errorHandle));
+  }
+
+  updateVentas(data: purchaseModel): Observable<any> {
+    const Url = `${environment.apiKEY}editVentas?id=` + data.id;
+    return this.http.post<purchaseModel>(Url, data, this.httpOptions).pipe(catchError(this.errorHandle));
+  }
+
+  getVentas(): Observable<any> {
+    const Url = `${environment.apiKEY}getVentas`;
+    return this.http.get<any>(Url);
+  }
+
+  deleteVentas(data: any): Observable<any> {
+    const Url = `${environment.apiKEY}deleteVentas`;
+    return this.http.post<any>(Url, data);
+  }
 
   deletePurchase(data: any): Observable<any> {
     const Url = `${environment.apiKEY}deletePurchase`;
