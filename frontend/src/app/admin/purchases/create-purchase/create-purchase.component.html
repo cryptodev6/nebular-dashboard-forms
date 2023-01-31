@@ -1,0 +1,100 @@
+<nb-card>
+  <nb-card-header>{{headerTxt}}</nb-card-header>
+  <nb-card-body class="example-items-col mt-2">
+    <form name="createProviderForm" #createProviderForm class="dis-flex just-between align-start"
+      (ngSubmit)="onSubmit(createProviderForm)">
+      <input type="hidden" [(ngModel)]="id" name="id" />
+      <div class="p-1" [class.w-25]="data.width === 25" [class.w-75]="data.width === 75"
+        *ngFor="let data of formFeildList; let i = index">
+        <label for="declaration">{{ data.title }}</label>      
+
+        <jqxDropDownButton #providerDropdownButton placeholder="{{ data.title }}" name="{{ data.name }}"
+          *ngIf="data.name == 'proveedor'" required fullWidth>
+          <jqxGrid #providerGrid [theme]="'material'" (onRowselect)="providerGridOnRowSelect($event)"
+            [source]="proveedorDataAdapter" [columns]="providerColumns" [pageable]="true" [columnsresize]="true"
+            [autoheight]="true" [sortable]="true" [filterable]="true">
+          </jqxGrid>
+        </jqxDropDownButton>
+
+        <input *ngIf="data.inputType === 'number'" type="number" nbInput fullWidth [(ngModel)]="data.value"
+          name="{{ data.name }}" fieldSize="medium" placeholder="{{ data.title }}" class="dis-block"
+         disabled />
+
+        <input *ngIf="data.inputType === 'text'" type="text" nbInput fullWidth [(ngModel)]="data.value" required
+          name="{{ data.name }}" fieldSize="medium" placeholder="{{ data.title }}" class="dis-block"
+          [status]="!data.value && error ? 'danger' : 'basic'" />
+
+        <span *ngIf="data.inputType === 'date' && data.name == 'CP'">
+          <input nbInput placeholder="{{ data.title }}"  class="dis-block"
+            [status]="!data.value && error ? 'danger' : 'basic'" fullWidth [(ngModel)]="data.value" required 
+            name="{{ data.name }}" [nbDatepicker]="ddd_1" />
+          <nb-datepicker #ddd_1></nb-datepicker>
+        </span>
+        <span class="text-danger" *ngIf="!data.value && error">{{data.title + data.required}}</span>
+
+        <nb-select *ngIf="data.name == 'adquiridas_a_titulo'" placeholder="{{ data.title }}" [(ngModel)]="data.value"
+          required class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'" fullWidth
+          name="{{ data.name }}">
+          <!-- <nb-option value="">Select Value</nb-option> -->
+          <nb-option value="Compra con beneficios">Compra - Venta </nb-option>
+          <nb-option value="Compra sin beneficios">Contrato de mandato </nb-option>
+          <nb-option value="Compra sin beneficios">Otros </nb-option>
+        </nb-select>
+
+        <!-- <nb-select *ngIf="data.name == 'adquiridas_a_titulo'" placeholder="{{ data.title }}" [(ngModel)]="data.value"
+          required class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'" fullWidth
+          name="{{ data.name }}">
+          <nb-option value="">Select Value</nb-option>
+          <nb-option value="compra">compra</nb-option>
+          <nb-option value="venta">venta</nb-option>
+        </nb-select> -->
+
+        <nb-select *ngIf="data.name == 'tipo_de_compra'" placeholder="{{ data.title }}" [(ngModel)]="data.value"
+          required class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'" fullWidth
+          name="{{ data.name }}">
+          <!-- <nb-option value="">Select Value</nb-option> -->
+          <nb-option value="Compra con beneficios">Compra con beneficios</nb-option>
+          <nb-option value="Compra sin beneficios">Compra sin beneficios</nb-option>
+        </nb-select>
+
+        <span *ngIf="data.inputType === 'date'">
+          <input
+            nbInput
+            placeholder="Pick Date Range"
+            class="d-block m-0" fullWidth name="{{ data.name }}"
+            fullWidth
+            [(ngModel)]="data.value"
+            name="{{ data.name }}"
+            [nbDatepicker]="ddd_1"
+          />
+          <nb-datepicker #ddd_1></nb-datepicker>
+        </span>
+        <nb-select
+        *ngIf="data.inputType === 'lists'"
+        placeholder="text"
+        [(ngModel)]="data.value"
+        class="dis-block"
+        fullWidth
+        name="{{ data.name }}"
+        aria-required=""
+      >
+        <nb-option value="1">Option 1</nb-option>
+        <nb-option value="2">Option 2</nb-option>
+        <nb-option value="3">Option 3</nb-option>
+        <nb-option value="4">Option 4</nb-option>
+      </nb-select>
+      
+        <!-- <nb-select *ngIf="data.inputType == 'date'"><input
+          nbInput placeholder="{{ data.title }}" [(ngModel)]="data.value" required
+          class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'" fullWidth name="{{ data.name }}"> -->
+          <!-- <nb-option value="">Select Value</nb-option> -->
+          <!-- <nb-option value="1">Option 1</nb-option>
+          <nb-option value="2">Option 2</nb-option>
+        </nb-select> -->
+
+      </div>
+
+      <button nbButton status="primary" type="submit" class="btn">{{id ? 'Update' : 'Submit'}}</button>
+    </form>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,105 @@
+<nb-card>
+  <nb-card-header>Crear Ventas</nb-card-header>
+  <nb-card-body class="example-items-col mt-2">
+    <form
+      name="createVentasForm" #createVentasForm
+      class="dis-flex just-between align-start"
+      (ngSubmit)="onSubmit(createVentasForm)"
+    >
+      <div
+        class="p-1"
+        [class.w-25]="data.width === 25"
+        [class.w-75]="data.width === 75"
+        *ngFor="let data of formFeildList; let i = index"
+      >
+        <label for="declaration">{{ data.title }}</label>
+        <nb-select
+          *ngIf="data.inputType === 'lists' && data.title === 'Pais'"
+          placeholder="{{ data.title }}" (selectedChange)="pickCountry($event)"
+          [(ngModel)] ="data.value" required
+          class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'"
+          fullWidth
+          name="{{ data.name }}" 
+        >
+        <nb-option value="">Select Value</nb-option>
+          <nb-option *ngFor="let opt of countryList" [value]="opt.countryId">{{opt.name}}</nb-option>
+        </nb-select>
+
+        <nb-select
+          *ngIf="data.inputType === 'list' && data.title === 'Ciudades'"
+          placeholder="{{ data.title }}"
+          [(ngModel)] ="data.value" required
+          class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'"
+          fullWidth
+          name="{{ data.name }}" 
+        >
+          <nb-option value="">Select Value</nb-option>
+          <nb-option *ngFor="let opt of pickedStates" [value]="opt.id">{{opt.name}}</nb-option>
+        </nb-select>
+
+        <input
+          *ngIf="data.inputType === 'number'"
+          type="number"
+          nbInput
+          fullWidth
+          [(ngModel)] ="data.value" required
+          name="{{ data.name }}"
+          fieldSize="medium"
+          placeholder="{{ data.title }}"
+          class="dis-block" [status]="!data.value && error ? 'danger' : 'basic'"
+        />
+        <input
+          *ngIf="data.inputType === 'text'"
+          type="text"
+          nbInput
+          fullWidth
+          [(ngModel)] ="data.value" required
+          name="{{ data.name }}"
+          fieldSize="medium"
+          placeholder="{{ data.title }}"
+          class="dis-block" [status]="!data.value && error ? 'danger' : 'basic'"
+        />
+
+        <nb-select
+        *ngIf="data.inputType === 'list'"
+        placeholder="text"
+        [(ngModel)]="data.value"
+        class="dis-block"
+        fullWidth
+        name="{{ data.name }}"
+        aria-required=""
+      >
+        <nb-option value="1">Option 1</nb-option>
+        <nb-option value="2">Option 2</nb-option>
+        <nb-option value="3">Option 3</nb-option>
+        <nb-option value="4">Option 4</nb-option>
+      </nb-select>
+
+        <textarea
+          *ngIf="data.inputType === 'textarea'"
+          nbInput
+          fullWidth
+          [(ngModel)] ="data.value" required
+          name="{{ data.name }}"
+          placeholder="{{ data.title }}"
+        ></textarea>
+        <span *ngIf="data.inputType === 'date'">
+          <input
+            nbInput
+            placeholder="{{ data.title }}"
+            class="dis-block" [status]="!data.value && error ? 'danger' : 'basic'"
+            fullWidth
+            [(ngModel)] ="data.value" required
+            name="{{ data.name }}"
+            [nbDatepicker]="ddd_1"
+          />
+          <nb-datepicker #ddd_1></nb-datepicker>
+        </span>
+        <span class="text-danger" *ngIf="!data.value && error">{{data.title + data.required}}</span>
+
+      </div>
+
+      <button nbButton status="primary" type="submit" class="btn">{{id ? 'Update' : 'Submit'}}</button>
+    </form>
+  </nb-card-body>
+</nb-card>

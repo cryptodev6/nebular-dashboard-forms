@@ -29,12 +29,23 @@ User.addProveedors = function (userData, result) {
         cuenta: userData.cuenta ? userData.cuenta : null,
         fax: userData.fax ? userData.fax : null,
         contacts: userData.contacts ? userData.contacts : null,
-        hasta: userData.hasta ? userData.hasta : null,
-        desde: userData.desde ? userData.desde : null,
-        prefijo: userData.prefijo ? userData.prefijo : null,
-        resolucion: userData.resolucion ? userData.resolucion : null,
+        banco: userData.banco ? userData.banco : null,
+        moneda: userData.moneda ? userData.moneda : null,
+        incoterms: userData.incoterms ? userData.incoterms : null,
+        lugar_incoterm: userData.lugar_incoterm ? userData.lugar_incoterm : null,
         // vencimiento: userData.vencimiento ? userData.vencimiento : null,
-
+        forma_pago: userData.forma_pago ? userData.forma_pago : null,
+        dias_pago: userData.dias_pago ? userData.dias_pago : null,
+        condition: userData.condition ? userData.condition : null,
+        otra: userData.otra ? userData.otra : null,
+        retencion: userData.retencion ? userData.retencion : null,
+        tipo_proveedor: userData.tipo_proveedor ? userData.tipo_proveedor : null,
+        inter: userData.inter ? userData.inter : null,
+        clasification: userData.clasification ? userData.clasification : null,
+        porc: userData.porc ? userData.porc : null,
+        compania: userData.compania ? userData.compania : null,
+        lugar_embarque: userData.lugar_embarque ? userData.lugar_embarque : null,
+       
     }
     sql.query("INSERT INTO `proveedors` SET ? ", [insertedData], function (err, res) {
         if (err) {
@@ -78,10 +89,24 @@ User.editProveedors = function (userData, result) {
                     cuenta: userData.cuenta ? userData.cuenta : res[0].cuenta,
                     fax: userData.fax ? userData.fax : res[0].fax,
                     contacts: userData.contacts ? userData.contacts : res[0].contacts,
-                    hasta: userData.hasta ? userData.hasta : null,
-                    desde: userData.desde ? userData.desde : null,
-                    prefijo: userData.prefijo ? userData.prefijo : null,
-                    resolucion: userData.resolucion ? userData.resolucion : null,
+
+                    banco: userData.banco ? userData.banco : res[0].banco,
+                    moneda: userData.moneda ? userData.moneda : res[0].moneda,
+                    incoterms: userData.incoterms ? userData.incoterms : res[0].incoterms,
+                    lugar_incoterm: userData.lugar_incoterm ? userData.lugar_incoterm : res[0].lugar_incoterm,
+                    forma_pago: userData.forma_pago ? userData.forma_pago : res[0].forma_pago,
+                    dias_pago: userData.dias_pago ? userData.dias_pago : res[0].dias_pago,
+                    condition: userData.condition ? userData.condition : res[0].condition,
+                    otra: userData.otra ? userData.otra : res[0].otra,
+                    retencion: userData.retencion ? userData.retencion : res[0].retencion,
+                    tipo_proveedor: userData.tipo_proveedor ? userData.tipo_proveedor : res[0].tipo_proveedor,
+                    inter: userData.inter ? userData.inter : res[0].inter,
+                    clasification: userData.clasification ? userData.clasification : res[0].clasification,
+
+                    porc: userData.porc ? userData.porc : res[0].porc,
+                    compania: userData.compania ? userData.compania : res[0].compania,
+                    lugar_embarque: userData.lugar_embarque ? userData.lugar_embarque : res[0].lugar_embarque,
+                   
                 }
                 sql.query("UPDATE proveedors SET ? WHERE id=?", [updatedData, userData.id], function (err, res1) {
                     console.log(sql)
@@ -92,7 +117,7 @@ User.editProveedors = function (userData, result) {
                         data['body'] = [err];
                         result(null, data);
                     } else {
-
+                        console.log("RES1===>",res1);
                         data['error'] = false;
                         data['msg'] = "Updated Successfully";
                         data['body'] = [];
@@ -142,7 +167,7 @@ User.getProveedors = (userData, result) => {
     var searchStr = '';
     if (userData.searchStr) {
         const text = userData.searchStr.toLowerCase();
-        var searchStr = "(( codigo_proveedor like '" + userData.searchStr + "%') or ( codigo_padre like '" + userData.searchStr + "%') or ( razon_social like '" + userData.searchStr + "%') or ( uu.ciudades like '" + userData.searchStr + "%') or ( uu.pais like '" + userData.searchStr + "%') or ( uu.direccion like '" + userData.searchStr + "%')or ( uu.ciudad like '" + userData.searchStr + "%') or ( uu.telefono like '" + userData.searchStr + "%') or ( uu.cuenta like '" + userData.searchStr + "%')) and";
+        var searchStr = "(( codigo_proveedor like '" + userData.searchStr + "%') or ( codigo_padre like '" + userData.searchStr + "%') or ( razon_social like '" + userData.searchStr + "%') or ( uu.ciudades like '" + userData.searchStr + "%') or ( uu.pais like '" + userData.searchStr + "%') or ( uu.direccion like '" + userData.searchStr + "%')or ( uu.ciudad like '" + userData.searchStr + "%') or ( uu.telefono like '" + userData.searchStr + "%') or ( uu.cuenta like '" + userData.searchStr + "%') or ( uu.fax like '" + userData.searchStr + "%') or ( uu.banco like '" + userData.searchStr + "%') or ( uu.moneda like '" + userData.searchStr + "%') or ( uu.incoterms like '" + userData.searchStr + "%') or ( uu.lugar_incoterm like '" + userData.searchStr + "%') or ( uu.forma_pago like '" + userData.searchStr + "%') or ( uu.dias_pago like '" + userData.searchStr + "%') or ( uu.condition like '" + userData.searchStr + "%') or ( uu.otra like '" + userData.searchStr + "%') or ( uu.retencion like '" + userData.searchStr + "%')    or ( uu.tipo_proveedor like '" + userData.searchStr + "%') or ( uu.inter like '" + userData.searchStr + "%') or ( uu.clasification like '" + userData.searchStr + "%') or ( uu.porc like '" + userData.searchStr + "%') or ( uu.compania like '" + userData.searchStr + "%') or ( uu.lugar_embarque like '" + userData.searchStr + "%') ) and";
         if (userData.searchStr == '') {
             var searchStr = '';
         }
@@ -242,7 +267,21 @@ User.addPurchase = function (userData, result) {
         tipo_de_compra: userData.tipo_de_compra ? userData.tipo_de_compra : null,
         resolucion: userData.resolucion ? userData.resolucion : null,
         fecha_pago: userData.fecha_pago ? userData.fecha_pago : null,
-        ciudad_regalias: userData.ciudad_regalias ? userData.ciudad_regalias : null
+        ciudad_regalias: userData.ciudad_regalias ? userData.ciudad_regalias : null,
+
+        contacto: userData.contacto ? userData.contacto : null,
+        valor_descuento: userData.valor_descuento ? userData.valor_descuento : null,
+        rate: userData.rate ? userData.rate : null,
+        rate_actual: userData.rate_actual ? userData.rate_actual : null,
+        minimo_retencion: userData.minimo_retencion ? userData.minimo_retencion : null,
+        valor_retefuente: userData.valor_retefuente ? userData.valor_retefuente : null,
+        valor_iva: userData.valor_iva ? userData.valor_iva : null,
+        numero_lote: userData.numero_lote ? userData.numero_lote : null,
+        fecha_page: userData.fecha_page ? userData.fecha_page : null,
+        ciudad_regalias: userData.ciudad_regalias ? userData.ciudad_regalias : null,
+        valor_regalias: userData.valor_regalias ? userData.valor_regalias : null,
+        no_Chargue: userData.no_Chargue ? userData.no_Chargue : null,
+        titulo_minero: userData.titulo_minero ? userData.titulo_minero : null,
 
     }
     sql.query("INSERT INTO `purchase` SET ? ", [insertedData], function (err, res) {
@@ -274,7 +313,6 @@ User.editPurchase = function (userData, result) {
         } else {
             if (res.length > 0) {
                 var updatedData = {
-                    //codigo_proveedor: userData.codigo_proveedor ? userData.codigo_proveedor : res[0].codigo_proveedor,
                     codigo_auxiliar: userData.codigo_auxiliar ? userData.codigo_auxiliar : res[0].codigo_auxiliar,
                     numero_facture: userData.numero_facture ? userData.numero_facture : res[0].numero_facture,
                     fecha_compra: userData.fecha_compra ? userData.fecha_compra : res[0].fecha_compra,
@@ -287,7 +325,21 @@ User.editPurchase = function (userData, result) {
                     tipo_de_compra: userData.tipo_de_compra ? userData.tipo_de_compra : res[0].tipo_de_compra,
                     resolucion: userData.resolucion ? userData.resolucion : res[0].resolucion,
                     fecha_pago: userData.fecha_pago ? userData.fecha_pago : res[0].fecha_pago,
-                    ciudad_regalias: userData.ciudad_regalias ? userData.ciudad_regalias : res[0].ciudad_regalias
+                   
+
+                    contacto: userData.contacto ? userData.contacto : res[0].contacto,
+                    valor_descuento: userData.valor_descuento ? userData.valor_descuento : res[0].valor_descuento,
+                    rate: userData.rate ? userData.rate : res[0].rate,
+                    rate_actual: userData.rate_actual ? userData.rate_actual : res[0].rate_actual,
+                    minimo_retencion: userData.minimo_retencion ? userData.minimo_retencion : res[0].minimo_retencion,
+                    valor_retefuente: userData.valor_retefuente ? userData.valor_retefuente : res[0].valor_retefuente,
+                    valor_iva: userData.valor_iva ? userData.valor_iva : res[0].valor_iva,
+                    numero_lote: userData.numero_lote ? userData.numero_lote : res[0].numero_lote,
+                    fecha_page: userData.fecha_page ? userData.fecha_page : res[0].fecha_page,
+                    ciudad_regalias: userData.ciudad_regalias ? userData.ciudad_regalias : res[0].ciudad_regalias,
+                    valor_regalias: userData.valor_regalias ? userData.valor_regalias : res[0].valor_regalias,
+                    no_Chargue: userData.no_Chargue ? userData.no_Chargue : res[0].no_Chargue,
+                    titulo_minero: userData.titulo_minero ? userData.titulo_minero : res[0].titulo_minero
                 }
                 sql.query("UPDATE purchase SET ? WHERE id=?", [updatedData, userData.id], function (err, res1) {
                     console.log(sql)
@@ -298,7 +350,7 @@ User.editPurchase = function (userData, result) {
                         data['body'] = [err];
                         result(null, data);
                     } else {
-
+                        console.log("RES1===>",res1);
                         data['error'] = false;
                         data['msg'] = "Updated Successfully";
                         data['body'] = [];
@@ -348,7 +400,7 @@ User.getPurchase = (userData, result) => {
     var searchStr = '';
     if (userData.searchStr) {
         const text = userData.searchStr.toLowerCase();
-        var searchStr = "(( codigo_auxiliar like '" + userData.searchStr + "%') or ( numero_facture like '" + userData.searchStr + "%') or ( fecha_compra like '" + userData.searchStr + "%') or ( uu.proveedor like '" + userData.searchStr + "%') or ( uu.percentage_desc like '" + userData.searchStr + "%')) and";
+        var searchStr = "(( codigo_auxiliar like '" + userData.searchStr + "%') or ( numero_facture like '" + userData.searchStr + "%') or ( fecha_compra like '" + userData.searchStr + "%') or ( uu.proveedor like '" + userData.searchStr + "%') or ( uu.percentage_desc like '" + userData.searchStr + "%')     or ( uu.contacto like '" + userData.searchStr + "%') or ( uu.valor_descuento like '" + userData.searchStr + "%') or ( uu.rate like '" + userData.searchStr + "%') or ( uu.rate_actual like '" + userData.searchStr + "%') or ( uu.minimo_retencion like '" + userData.searchStr + "%') or ( uu.valor_retefuente like '" + userData.searchStr + "%') or ( uu.valor_iva like '" + userData.searchStr + "%') or ( uu.numero_lote like '" + userData.searchStr + "%') or ( uu.fecha_page like '" + userData.searchStr + "%') or ( uu.valor_regalias like '" + userData.searchStr + "%') or ( uu.no_Chargue like '" + userData.searchStr + "%') or ( uu.titulo_minero like '" + userData.searchStr + "%')) and";
         if (userData.searchStr == '') {
             var searchStr = '';
         }
@@ -483,7 +535,7 @@ User.editVentas = function (userData, result) {
                         data['body'] = [err];
                         result(null, data);
                     } else {
-
+                        console.log("RES1===>",res1);
                         data['error'] = false;
                         data['msg'] = "Updated Successfully";
                         data['body'] = [];

@@ -1,5 +1,5 @@
 <nb-card>
-    <nb-card-header>View Ventas</nb-card-header>
+    <nb-card-header>Visualizar ventas</nb-card-header>
     <nb-card-body>
       <label class="search-label" for="search">Search:</label>
       <input nbInput [nbFilterInput]="dataSource" id="search"
@@ -22,7 +22,7 @@
             <td nbTreeGridCell *nbTreeGridCellDef="let row">
               <div class="d-flex justify-content-between">
                 <div>
-                  <button nbButton size="tiny" status="warning" type="button" [routerLink]="['/pages/purchase/edit-purchase',row.data.id]"><i class="fa fa-edit"></i></button>
+                  <button nbButton size="tiny" status="warning" type="button" [routerLink]="['/pages/ventas/edit-ventas',row.data.id]"><i class="fa fa-edit"></i></button>
                 </div>
                 <div>
                   <button nbButton size="tiny" status="danger" type="button" (click)="open(dialog,row.data.id)"><i class="fa fa-trash"></i></button>

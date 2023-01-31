@@ -12,13 +12,14 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { CreateProviderComponent } from './provider/create-provider/create-provider.component';
 import { ViewBuyersComponent } from './buyers/view-buyers/view-buyers.component';
-import { CloseCycleComponent } from './close-cycle/close-cycle.component';
-import { VisualizerComponent } from './visualizer/visualizer.component';
+import { CloseCycleComponent } from './ventas/close-cycle/close-cycle.component'; 
+import { VisualizerComponent } from './ventas/visualizer/visualizer.component'; 
 
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
   children: [
+    { path: 'dashboard', redirectTo: 'dashboard', pathMatch: 'full' },
     {
       path: 'dashboard',
       component: DashboardComponent,
@@ -68,8 +69,8 @@ const routes: Routes = [{
           component: VisualizerComponent,
         },
         {
-          path:'edit-provider/:id',
-          component:CreateProviderComponent
+          path:'edit-ventas/:id',
+          component:CloseCycleComponent
         }
       ],
     },

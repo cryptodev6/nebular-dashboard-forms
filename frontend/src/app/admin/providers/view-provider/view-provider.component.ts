@@ -1,42 +1,42 @@
 import { Component, OnInit, Input, TemplateRef } from '@angular/core';
 import { NbDialogService, NbIconConfig, NbSortDirection, NbSortRequest, NbToastrService, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
-import { DeclarationService } from '../../service/declaration.service';
+import { DeclarationService } from '../../../service/declaration.service';
 
 interface TreeNode<T> {
   data: T;
 }
 
 interface PRDEntry {
-  codigo_auxiliar: any,
-  numero_facture: any,
-  fecha_compra: any,
-  codigo_proveedor: any,
-  percentage_desc: any,
-  compania: any,
-  adquiridas_a_titulo: any,
-  CP: any,
-  fecha_CP: any,
-  tipo_de_compra: any,
-  is_deleted: any,
-  resolucion: any,
-  updated_at: any,
+  ciudad:any,
+  ciudades:any,
+  codigo_padre:any,
+  codigo_proveedor:any,
+  contacts:any,
+  created_at:any,
+  cuenta:any,
+  direccion:any,
+  fax:any,
+  id:any,1
+  is_deleted:any,
+  pais:any,
+  razon_social:any,
+  telefono:any,
+  updated_at:any,
 }
 
 @Component({
-  selector: 'ngx-visualizer',
-  templateUrl: './visualizer.component.html',
-  styleUrls: ['./visualizer.component.scss']
+  selector: 'ngx-view-provider',
+  templateUrl: './view-provider.component.html',
+  styleUrls: ['./view-provider.component.scss']
 })
-export class VisualizerComponent implements OnInit {
-
-  defaultColumns = [
-    'codigo_auxiliar', 'numero_facture', 'fecha_compra', 'proveedor','percentage_desc', 'compania', 'adquiridas_a_titulo','id', 'Action',
-  ];
-  allColumns = [...this.defaultColumns];
+export class ViewProviderComponent implements OnInit {
+  // 'resolucion', 'vencimiento', 'prefijo', 'desde', 'hasta',
+  defaultColumns = [ 'codigo_proveedor','codigo_padre', 'razon_social', 'ciudades', 'pais', 'ciudad', 'telefono', 'cuenta', 'Action',];
+  allColumns = [ ...this.defaultColumns ];
   headerColumns = [
-    'Codigo Auxiliar', 'Numero Facture', 'Fecha Compra', 'Proveedor', '% descuento a valor de IVA', 'Compania', 'Adquiridas a Titulo','CP', 'Action',
+    'Codigo proveedor', 'Codigo padre', 'Razon social', 'Ciudades', 'Pais', 'Ciudad', 'Telefono', 'Cuenta', 'Action',
   ];
-  result: any
+  result :any
   dataSource: NbTreeGridDataSource<PRDEntry>;
 
   sortColumn: string;
@@ -44,7 +44,7 @@ export class VisualizerComponent implements OnInit {
   data: any;
 
   constructor(private dialogService: NbDialogService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<PRDEntry>,
-    private declareList: DeclarationService, private toastrService: NbToastrService) {
+    private declareList: DeclarationService,private toastrService: NbToastrService) {
     this.getData()
   }
 
@@ -69,30 +69,32 @@ export class VisualizerComponent implements OnInit {
     return minWithForMultipleColumns + (nextColumnStep * index);
   }
 
-  getData() {
-    this.declareList.getVentas().subscribe(
+  getData(){
+    this.declareList.getDeclareData().subscribe(
       (result: any) => {
         this.result = result.body;
-        let mappedData: TreeNode<PRDEntry>[] = []
-        if (this.result.length) {
-          console.log("ssssssss",this.result);
-          
+        console.log("proveeedooorrrrr",this.result);
+        
+        let mappedData:TreeNode<PRDEntry>[] = []
+        if(this.result.length) {
           this.result.map(o => o.Action = '')
           this.result.map(item => {
-            mappedData.push({ data: item });
+            mappedData.push({data : item});
           })
         }
         this.dataSource = this.dataSourceBuilder.create(mappedData);
+        console.log(mappedData);
+        
       },
-      (error: any) => console.log(error.msg)
+      (error: any) => console.log(error.message)
     );
   }
 
-  open(dialog: TemplateRef<any>, row: any) {
+  open(dialog: TemplateRef<any>, row:any) {
     this.dialogService.open(dialog, { context: row });
   }
 
-  DelRow(id, ref: any) {
+  DelRow(id, ref:any){
     const iconPrimaryConfig: NbIconConfig = {
       icon: 'done-all-outline',
       pack: 'eva',
@@ -103,23 +105,20 @@ export class VisualizerComponent implements OnInit {
       pack: 'eva',
       status: 'danger',
     };
-    let body = {
-      id: id
+    let body={
+      id:id
     }
 
-    this.declareList.deleteVentas(body).subscribe((res) => {
+    this.declareList.deleteProveedors(body).subscribe((res)=>{
       console.log('Cell Deleted');
       this.toastrService.show('Row Deleted', res.msg, iconPrimaryConfig);
       this.getData();
-      if (ref) {
+      if(ref) {
         ref.close();
       }
     },
-      (error: any) => {
-        this.toastrService.show('Error', error, iconDangerConfig);
-      })
+    (error: any) => {
+      this.toastrService.show('Error', error, iconDangerConfig);
+    })
   }
-
 }
-
-

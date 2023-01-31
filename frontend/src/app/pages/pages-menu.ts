@@ -4,7 +4,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Dashboard',
     icon: 'home-outline',
-    link: '/pages/dashboard',
+    link: '/user/dashboard',
   },
   {
     title: 'Input',
@@ -12,11 +12,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Create Input',
-        link: '/pages/input/create-input',
+        link: '/user/input/create-input',
       },
       {
         title: 'View Input',
-        link: '/pages/input/view-input',
+        link: '/user/input/view-input',
       }
     ],
   },
@@ -26,26 +26,26 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Create Purchase',
-        link: '/pages/purchase/create-purchase',
+        link: '/user/purchase/create-purchase',
       },
       {
         title: 'View Purchase',
-        link: '/pages/purchase/view-purchase',
+        link: '/user/purchase/view-purchase',
       }
     ],
   },
   {
     title: 'Ventas',
     icon: 'keypad-outline',
-    // link: '/pages/close-cycle'
+    // link: '/user/close-cycle'
     children:[
       {
         title: 'Crear Ventas',
-        link: '/pages/ventas/create-ventas',
+        link: '/user/ventas/create-ventas',
       },
       {
         title: 'Visualizar ventas',
-        link: '/pages/ventas/view-ventas',
+        link: '/user/ventas/view-ventas',
       }
     ]
   },
@@ -55,11 +55,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Create provider',
-        link: '/pages/provider/create-provider',
+        link: '/user/provider/create-provider',
       },
       {
         title: 'View provider',
-        link: '/pages/provider/view-provider',
+        link: '/user/provider/view-provider',
       }
     ]
   },
@@ -69,11 +69,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Create buyers',
-        link: '/pages/buyers/create-buyers',
+        link: '/user/buyers/create-buyers',
       },
       {
         title: 'View buyers',
-        link: '/pages/buyers/view-buyers',
+        link: '/user/buyers/view-buyers',
       }
     ]
   }

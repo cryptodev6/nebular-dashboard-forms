@@ -21,7 +21,7 @@ router.get('/getPurchaseById', userController.getPurchaseById);
 ///////////////Ventas///////////////
 router.post('/addVentas', userController.addVentas);
 router.post('/editVentas', userController.editVentas);
-router.get('/getVentas', userController.getVentas);
 router.post('/deleteVentas', userController.deleteVentas);
+router.get('/getVentas', userController.getVentas);
 router.get('/getVentasById', userController.getVentasById);
 module.exports = router;

@@ -126,7 +126,7 @@ exports.getPurchaseById = function (req, res) {
 exports.addVentas = function (req, res) {
     console.log('request: ', req);
     var param = req.body
-    var data=[];
+    // var data=[];
     console.log("params***********", param)
     if (req.param && !!param.codigoAuncliar) {
         User.addVentas(param, function (err, response) {
@@ -145,7 +145,7 @@ exports.addVentas = function (req, res) {
 exports.editVentas = function (req, res) {
     var param = req.body
     // console.log("params***********", param)
-    User.editPurchase(param, function (err, response) {
+    User.editVentas(param, function (err, response) {
         if (err)
             return res.send(err);
         return res.json(response);

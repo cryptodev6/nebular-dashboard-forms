@@ -41,7 +41,11 @@ export class CreateProviderComponent implements OnInit {
   resData: any;
   countryList: any;
   statelist: any[] =[];
-  pickedStates:any[] =[];
+  pickedStates:any;
+  providerDropdownButton: any;
+  providerGrid: any;
+  adquiridasDropdownButton: any;
+  adquiridasGrid: any;
 
   constructor( private declareList: DeclarationService, private route: ActivatedRoute,
     private toastrService: NbToastrService) {
@@ -131,46 +135,178 @@ export class CreateProviderComponent implements OnInit {
       },
 
 
+      // {
+      //   name: 'resolucion',
+      //   title: 'Resolucion de facturación',
+      //   inputType: 'number',
+      //   width: 25,
+      //   value: '',
+      //   required:' Required'
+      // },
+      // {
+      //   name: 'vencimiento',
+      //   title: 'Fecha de vencimiento',
+      //   inputType: 'date',
+      //   width: 25,
+      //   value: '',
+      //   required:' Required'
+      // },
+      // {
+      //   name: 'prefijo',
+      //   title: 'Prefijo ',
+      //   inputType: 'text',
+      //   width: 25,
+      //   value: '',
+      //   required:' Required'
+      // },
+      // {
+      //   name: 'desde',
+      //   title: 'Desde ',
+      //   inputType: 'text',
+      //   width: 25,
+      //   value: '',
+      //   required:' Required'
+      // },
+      // {
+      //   name: 'hasta',
+      //   title: 'Hasta',
+      //   inputType: 'text',
+      //   width: 25,
+      //   value: '',
+      //   required:' Required'
+      // },
+
+
       {
-        name: 'resolucion',
-        title: 'Resolucion de facturación',
+        name: 'fax',
+        title: 'Fax',
+        inputType: 'text',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+      {
+        name: 'banco',
+        title: 'Banco',
+        inputType: 'text',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+      {
+        name: 'moneda',
+        title: 'Moneda',
+        inputType: 'text',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+      {
+        name: 'incoterms',
+        title: 'Incoterms',
+        inputType: 'text',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+      {
+        name: 'lugar',
+        title: 'Lugar Incoterm',
+        inputType: 'text',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+      {
+        name: 'forma_pago',
+        title: 'Forma Pago',
+        inputType: 'text',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+      {
+        name: 'dias_pago',
+        title: 'Dias Pago',
         inputType: 'number',
         width: 25,
         value: '',
         required:' Required'
       },
       {
-        name: 'vencimiento',
-        title: 'Fecha de vencimiento',
-        inputType: 'date',
-        width: 25,
-        value: '',
-        required:' Required'
-      },
-      {
-        name: 'prefijo',
-        title: 'Prefijo ',
+        name: 'condition',
+        title: 'Condicion Proveedor',
         inputType: 'text',
         width: 25,
         value: '',
         required:' Required'
       },
       {
-        name: 'desde',
-        title: 'Desde ',
+        name: 'otra',
+        title: 'Otra Proveedor',
         inputType: 'text',
         width: 25,
         value: '',
         required:' Required'
       },
       {
-        name: 'hasta',
-        title: 'Hasta',
+        name: 'retencion',
+        title: 'Retencion Fte',
+        inputType: 'number',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+      {
+        name: 'tipo',
+        title: 'Tipo Proveedor',
         inputType: 'text',
         width: 25,
         value: '',
         required:' Required'
       },
+
+      {
+        name: 'inter',
+        title: 'Inter Company',
+        inputType: 'text',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+      {
+        name: 'clasification',
+        title: 'Clasification',
+        inputType: 'text',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+      {
+        name: 'porc',
+        title: 'Porc. Anticipo',
+        inputType: 'number',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+      {
+        name: 'compania',
+        title: 'Compania',
+        inputType: 'text',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+      {
+        name: 'lugar',
+        title: 'Lugar Embarque',
+        inputType: 'text',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+
 
     ]
   }
@@ -193,7 +329,9 @@ export class CreateProviderComponent implements OnInit {
   }
   
   onSubmit(f: any) {
-    if(this.validationcheck()) {
+    
+    
+    if (this.validationcheck()) {
       return this.error = true;
     }
     const iconPrimaryConfig: NbIconConfig = {
@@ -208,35 +346,39 @@ export class CreateProviderComponent implements OnInit {
     };
 
     this.formFeildList?.forEach((ele: declarationType) => {
-       this.body[ele.name] = ele.value?? '';
+      this.body[ele.name] = ele.value ?? '';
     });
 
-    this.declareList.saveDeclareData(this.body).subscribe(
-      (result: any) => {
-        this.toastrService.show('Successfully Added', result.msg, iconPrimaryConfig);
-      },
-      (error: any) => {
-        this.toastrService.show('Required s are missing', error, iconDangerConfig);
-      }
-    );
-    console.log("ssssssss",this.declareList);
-    
-    if(this.id !=undefined){
+    if (this.id > 0) {
+      this.body.id = parseInt(this.id);
       this.declareList.editProveedors(this.body).subscribe(
         (result: any) => {
-          this.toastrService.show('Successfully Added', result.msg, iconPrimaryConfig);
-          console.log("ediitttttprooovider",result);
-          
+          this.toastrService.show('Successfully Updated', result.msg, iconPrimaryConfig);
         },
         (error: any) => {
-          this.toastrService.show('Required s are missing', error, iconDangerConfig);
+          this.toastrService.show('Required fields are missing', error, iconDangerConfig);
+        }
+      );
+    }
+    else {
+      this.declareList.saveDeclareData(this.body).subscribe(
+        (result: any) => {
+          this.toastrService.show('Successfully Added', result.msg, iconPrimaryConfig);
+        },
+        (error: any) => {
+          this.toastrService.show('Required fields are missing', error, iconDangerConfig);
         }
       );
     }
     this.error = false;
     f.reset();
+    this.providerDropdownButton.setContent('');
+    this.providerGrid.clearselection();
 
+    this.adquiridasDropdownButton.setContent('');
+    this.adquiridasGrid.clearselection();
   }
+
   
   getProviderById(){
     this.declareList.getProveedorsById(this.id).subscribe((res)=>{

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NbIconConfig, NbToastrService } from '@nebular/theme';
-import { DeclarationService } from '../../service/declaration.service'; 
-import { declarationType } from '../../shared/types/declarationType'; 
+import { DeclarationService } from '../../../service/declaration.service';
+import { declarationType } from '../../../shared/types/declarationType';
 
 @Component({
   selector: 'ngx-close-cycle',
@@ -20,15 +20,14 @@ export class CloseCycleComponent implements OnInit {
   Pais: any;
   id:any
   error: boolean = false;
-  createProviderForm!: NgForm;
+  createVentasForm!: NgForm;
   headerTxt:any;
   body:any= {
     codigoAuncliar:'',
     fechaAuncliar:'',
     numerodeDEX:'',
     FAprobacion:'',
-    FecEmbarque:'',
-    fechaDeudaExternaPlan:'',
+    FecEmbarque:'',   
     fechaDeudaExterna:'',
     Plan:'',
     CompaniaExportadora:'',
@@ -40,16 +39,20 @@ export class CloseCycleComponent implements OnInit {
     VelorOtrosGastos :'',
     Documento:'' ,
 
-    CompaniaSel :'',
-    CompaniaDO :'',
-    ventas:'',
-    
+    Comentario :'',
+    Compania :'',
+    Do:''
+     
 
   }
   resData: any;
   countryList: any;
   statelist: any[] =[];
   pickedStates:any[] =[];
+  providerDropdownButton: any;
+  providerGrid: any;
+  adquiridasDropdownButton: any;
+  adquiridasGrid: any;
 
   constructor( private declareList: DeclarationService, private route: ActivatedRoute,
     private toastrService: NbToastrService) {
@@ -65,7 +68,7 @@ export class CloseCycleComponent implements OnInit {
     this.formFeildList = [
       {
         name: 'codigoAuncliar',
-        title: 'Codligo Proveedor',
+        title: 'Codligo Auncliar',
         inputType: 'text',
         width: 25,
         value: '',
@@ -73,24 +76,24 @@ export class CloseCycleComponent implements OnInit {
       },
       {
         name: 'fechaAuncliar',
-        title: 'Cod. Padre',
-        inputType: 'text',
+        title: 'Fecha Auncliar',
+        inputType: 'date',
         width: 25,
         value: '',
         required:' Required'
       },
       {
         name: 'numerodeDEX',
-        title: 'Razon Social',
-        inputType: 'text',
+        title: 'Numero de Dex',
+        inputType: 'number',
         width: 25,
         value: '',
         required:' Required'
       },
       {
         name: 'FAprobacion',
-        title: 'Pais',
-        inputType: 'list',
+        title: 'F Aprobacion',
+        inputType: 'date',
         width: 25,
         value: '',
         required:' Required',
@@ -98,25 +101,25 @@ export class CloseCycleComponent implements OnInit {
       },
       {
         name: 'FecEmbarque',
-        title: 'FecEmbarque',
-        inputType: 'list',
+        title: 'Fec. Embarque',
+        inputType: 'date',
         width: 25,
         value: '',
         required:' Required',
         options: []
       },
-      {
-        name: 'fechaDeudaExternaPlan',
-        title: 'fechaDeudaExternaPlan',
-        inputType: 'text',
-        width: 25,
-        value: '',
-        required:' Required'
-      },
+      // {
+      //   name: 'fechaDeudaExternaPlan',
+      //   title: 'Fecha Deuda Externa Plan',
+      //   inputType: 'text',
+      //   width: 25,
+      //   value: '',
+      //   required:' Required'
+      // },
       {
         name: 'fechaDeudaExterna',
-        title: 'fechaDeudaExterna',
-        inputType: 'text',
+        title: 'Fecha Deuda Externa',
+        inputType: 'list',
         width: 25,
         value: '',
         required:' Required'
@@ -124,15 +127,15 @@ export class CloseCycleComponent implements OnInit {
       {
         name: 'Plan',
         title: 'Plan',
-        inputType: 'number',
+        inputType: 'list',
         width: 25,
         value: '',
         required:' Required'
       },
       {
         name: 'CompaniaExportadora',
-        title: 'CompaniaExportadora',
-        inputType: 'number',
+        title: 'Compania Exportadora',
+        inputType: 'text',
         width: 25,
         value: '',
         required:' Required'
@@ -142,7 +145,7 @@ export class CloseCycleComponent implements OnInit {
       {
         name: 'Comprador',
         title: 'Comprador',
-        inputType: 'number',
+        inputType: 'list',
         width: 25,
         value: '',
         required:' Required'
@@ -150,7 +153,7 @@ export class CloseCycleComponent implements OnInit {
       {
         name: 'Pais',
         title: 'Pais',
-        inputType: 'date',
+        inputType: 'lists',
         width: 25,
         value: '',
         required:' Required'
@@ -158,23 +161,23 @@ export class CloseCycleComponent implements OnInit {
       {
         name: 'Aduana',
         title: 'Aduana ',
-        inputType: 'text',
+        inputType: 'list',
         width: 25,
         value: '',
         required:' Required'
       },
       {
         name: 'VelorFletes',
-        title: 'VelorFletes ',
-        inputType: 'text',
+        title: 'Valor Fletes ',
+        inputType: 'number',
         width: 25,
         value: '',
         required:' Required'
       },
       {
         name: 'VelorSeguro',
-        title: 'VelorSeguro',
-        inputType: 'text',
+        title: 'Valor Seguro',
+        inputType: 'number',
         width: 25,
         value: '',
         required:' Required'
@@ -183,8 +186,8 @@ export class CloseCycleComponent implements OnInit {
 
       {
         name: 'VelorOtrosGastos',
-        title: 'VelorOtrosGastos ',
-        inputType: 'text',
+        title: 'Valor Otros Gastos ',
+        inputType: 'number',
         width: 25,
         value: '',
         required:' Required'
@@ -198,24 +201,24 @@ export class CloseCycleComponent implements OnInit {
         required:' Required'
       },
       {
-        name: 'CompaniaSel',
-        title: 'CompaniaSel ',
+        name: 'Comentario',
+        title: 'Comentario ',
+        inputType: 'textarea',
+        width: 25,
+        value: '',
+        required:' Required'
+      },
+      {
+        name: 'Compania',
+        title: 'Compania',
         inputType: 'text',
         width: 25,
         value: '',
         required:' Required'
       },
       {
-        name: 'CompaniaDO',
-        title: 'CompaniaDO',
-        inputType: 'text',
-        width: 25,
-        value: '',
-        required:' Required'
-      },
-      {
-        name: 'ventas',
-        title: 'ventas ',
+        name: 'do',
+        title: 'Do ',
         inputType: 'text',
         width: 25,
         value: '',
@@ -229,7 +232,7 @@ export class CloseCycleComponent implements OnInit {
     this.getCountry()
     this.getState()
     if(this.id !=undefined){
-      this.getProviderById();
+      this.getVentasById();
       this.headerTxt = 'Edit Provider';
     }
     else{
@@ -243,9 +246,11 @@ export class CloseCycleComponent implements OnInit {
   }
   
   onSubmit(f: any) {
-    // if(this.validationcheck()) {
-    //   return this.error = true;
-    // }
+    
+    
+    if (this.validationcheck()) {
+      return this.error = true;
+    }
     const iconPrimaryConfig: NbIconConfig = {
       icon: 'done-all-outline',
       pack: 'eva',
@@ -258,37 +263,40 @@ export class CloseCycleComponent implements OnInit {
     };
 
     this.formFeildList?.forEach((ele: declarationType) => {
-       this.body[ele.name] = ele.value?? '';
+      this.body[ele.name] = ele.value ?? '';
     });
 
-    this.declareList.addVentas(this.body).subscribe(
-      (result: any) => {
-        this.toastrService.show('Successfully Added', result.msg, iconPrimaryConfig);
-      },
-      (error: any) => {
-        this.toastrService.show('Required s are missing', error, iconDangerConfig);
-      }
-    );
-    console.log("ssssssss",this.declareList);
-    
-    if(this.id !=undefined){
+    if (this.id > 0) {
+      this.body.id = parseInt(this.id);
       this.declareList.updateVentas(this.body).subscribe(
         (result: any) => {
-          this.toastrService.show('Successfully Added', result.msg, iconPrimaryConfig);
-          console.log("ediitttttprooovider",result);
-          
+          this.toastrService.show('Successfully Updated', result.msg, iconPrimaryConfig);
         },
         (error: any) => {
-          this.toastrService.show('Required s are missing', error, iconDangerConfig);
+          this.toastrService.show('Required fields are missing', error, iconDangerConfig);
+        }
+      );
+    }
+    else {
+      this.declareList.addVentas(this.body).subscribe(
+        (result: any) => {
+          this.toastrService.show('Successfully Added', result.msg, iconPrimaryConfig);
+        },
+        (error: any) => {
+          this.toastrService.show('Required fields are missing', error, iconDangerConfig);
         }
       );
     }
     this.error = false;
     f.reset();
+    this.providerDropdownButton.setContent('');
+    this.providerGrid.clearselection();
 
+    this.adquiridasDropdownButton.setContent('');
+    this.adquiridasGrid.clearselection();
   }
   
-  getProviderById(){
+  getVentasById(){
     this.declareList.getVentasById(this.id).subscribe((res)=>{
       this.resData = res.body[0];
       this.formFeildList.map(item =>  {
