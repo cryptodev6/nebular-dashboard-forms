@@ -1,0 +1,20 @@
+<nb-card>
+  <nb-card-header>{{headerTxt}}</nb-card-header>
+  <nb-card-body class="example-items-col mt-2">
+    <form name="createProviderForm" #createProviderForm class="dis-flex just-between align-start"
+      (ngSubmit)="onSubmit(createProviderForm)">
+      <div class="p-1" [class.w-25]="data.width === 25" [class.w-75]="data.width === 75"
+        *ngFor="let data of formFeildList; let i = index">
+        <label for="declaration">{{ data.title }}</label>
+        <input *ngIf="data.inputType === 'number'" type="number" nbInput fullWidth [(ngModel)]="data.value" required
+          name="{{ data.name }}" fieldSize="medium" placeholder="{{ data.title }}" class="dis-block"
+          [status]="!data.value && error ? 'danger' : 'basic'" />
+        <input *ngIf="data.inputType === 'text'" type="text" nbInput fullWidth [(ngModel)]="data.value" required
+          name="{{ data.name }}" fieldSize="medium" placeholder="{{ data.title }}" class="dis-block"
+          [status]="!data.value && error ? 'danger' : 'basic'" />
+        <span class="text-danger" *ngIf="!data.value && error">{{data.title + data.required}}</span>
+      </div>
+      <button nbButton status="primary" type="submit" class="btn">{{id ? 'Update' : 'Submit'}}</button>
+    </form>
+  </nb-card-body>
+</nb-card>

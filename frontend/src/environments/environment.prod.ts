@@ -6,5 +6,5 @@
 export const environment = {
   production: true,
   // apiKEY: "http://43.205.48.160:3049"
-  apiKEY: "http://localhost:3004"
+  apiKEY: "http://localhost:3004/"
 };

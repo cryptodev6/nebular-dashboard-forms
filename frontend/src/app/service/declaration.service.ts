@@ -3,12 +3,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
-import { purchaseModel } from '../pages/purchase/models/purchase.model';
+import { purchaseModel, purchaseModels, purchaseModel1 } from '../pages/purchase/models/purchase.model';
 import { BaseService } from '../shared/services/base.service';
-import { providerModel } from '../pages/provider/models/provider.model';
-import { ventasModel } from '../pages/ventas/models/ventas.model';
-import { ventassModel } from '../admin/ventas/models/ventass.model';
-// import { purchaseModel } from '../admin/purchase/models/purchase.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -23,51 +19,23 @@ export class DeclarationService extends BaseService {
     super();
   }
 
- 
-  countryList(): Observable<any> {
-    const Url = `${environment.apiKEY}countryList`;
-    return this.http.get<any>(Url);
-  }
-  getStates(): Observable<any> {
-    const Url = `${environment.apiKEY}getStates`;
-    return this.http.get<any>(Url);
-  }
-
   getDeclareData(): Observable<any> {
     const Url = `${environment.apiKEY}getProveedors`;
     return this.http.get<any>(Url);
-  }  
-
-  getProveedorsById(id: any): Observable<any> {
-    const Url = `${environment.apiKEY}getProveedorsById?id=${id}`;
-    return this.http.get<any>(Url);
   }
-
-  saveDeclareData(data: providerModel): Observable<any> {
+  saveDeclareData(data: any): Observable<any> {
     const Url = `${environment.apiKEY}addProveedors`;
-    return this.http.post<providerModel>(Url, data).pipe(catchError(this.errorHandle));
-  }
-
-  editProveedors(data: providerModel): Observable<any> {
-    const Url = `${environment.apiKEY}editProveedors?id=` + data.id;;
-    return this.http.post<providerModel>(Url, data).pipe(catchError(this.errorHandle));
-  }
-
-  deleteProveedors(data: any): Observable<any> {
-    const Url = `${environment.apiKEY}deleteProveedors`;
-    return this.http.post<any>(Url, data);
+    return this.http.post<any>(Url, data).pipe(catchError(this.errorHandle));
   }
 
   getPurchase(): Observable<any> {
     const Url = `${environment.apiKEY}getPurchase`;
     return this.http.get<any>(Url);
   }
-
   getPurchaseById(id: any): Observable<any> {
     const Url = `${environment.apiKEY}getPurchaseById?id=${id}`;
     return this.http.get<any>(Url);
   }
-
   addPurchase(data: purchaseModel): Observable<any> {
     const Url = `${environment.apiKEY}addPurchase`;
     return this.http.post<purchaseModel>(Url, data, this.httpOptions).pipe(catchError(this.errorHandle));
@@ -77,39 +45,82 @@ export class DeclarationService extends BaseService {
     const Url = `${environment.apiKEY}editPurchase?id=` + data.id;
     return this.http.post<purchaseModel>(Url, data, this.httpOptions).pipe(catchError(this.errorHandle));
   }
-
   deletePurchase(data: any): Observable<any> {
     const Url = `${environment.apiKEY}deletePurchase`;
     return this.http.post<any>(Url, data);
   }
+ 
 
-
-  getVentasById(id: any): Observable<any> {
-    const Url = `${environment.apiKEY}getVentasById?id=${id}`;
+  getProveedorsById(id: any): Observable<any> {
+    const Url = `${environment.apiKEY}getProveedorsById?id=${id}`;
     return this.http.get<any>(Url);
   }
-
-
-  addVentas(data: ventasModel): Observable<any> {
-    const Url = `${environment.apiKEY}addVentas`;
-    return this.http.post<ventasModel>(Url, data, this.httpOptions).pipe(catchError(this.errorHandle));
+  editProveedors(data: any): Observable<any> {
+    const Url = `${environment.apiKEY}editProveedors`;
+    return this.http.post<any>(Url, data).pipe(catchError(this.errorHandle));
+  }
+  deleteProveedors(data: any): Observable<any> {
+    const Url = `${environment.apiKEY}deleteProveedors`;
+    return this.http.post<any>(Url, data);
   }
 
-  updateVentas(data: ventasModel): Observable<any> {
-    const Url = `${environment.apiKEY}editVentas?id=` + data.id;
-    return this.http.post<ventasModel>(Url, data, this.httpOptions).pipe(catchError(this.errorHandle));
-  }
+
 
   getVentas(): Observable<any> {
     const Url = `${environment.apiKEY}getVentas`;
     return this.http.get<any>(Url);
   }
-
+  getVentasById(id: any): Observable<any> {
+    const Url = `${environment.apiKEY}getVentasById?id=${id}`;
+    return this.http.get<any>(Url);
+  }
+  addVentas(data: purchaseModels): Observable<any> {
+    const Url = `${environment.apiKEY}addVentas`;
+    return this.http.post<purchaseModels>(Url, data, this.httpOptions).pipe(catchError(this.errorHandle));
+  }
+  updateVentas(data: purchaseModels): Observable<any> {
+    const Url = `${environment.apiKEY}editVentas?id=` + data.id;
+    return this.http.post<purchaseModels>(Url, data, this.httpOptions).pipe(catchError(this.errorHandle));
+  }
   deleteVentas(data: any): Observable<any> {
     const Url = `${environment.apiKEY}deleteVentas`;
     return this.http.post<any>(Url, data);
   }
 
+
+
+  getClientes(): Observable<any> {
+    const Url = `${environment.apiKEY}getClientes`;
+    return this.http.get<any>(Url);
+  }
+  getClientesById(id: any): Observable<any> {
+    const Url = `${environment.apiKEY}getClientesById?id=${id}`;
+    return this.http.get<any>(Url);
+  }
+  addClientes(data: purchaseModel1): Observable<any> {
+    const Url = `${environment.apiKEY}addClientes`;
+    return this.http.post<purchaseModel1>(Url, data, this.httpOptions).pipe(catchError(this.errorHandle));
+  }
+  updateClientes(data: purchaseModel1): Observable<any> {
+    const Url = `${environment.apiKEY}editClientes?id=` + data.id;
+    return this.http.post<purchaseModel1>(Url, data, this.httpOptions).pipe(catchError(this.errorHandle));
+  }
+  deleteClientes(data: any): Observable<any> {
+    const Url = `${environment.apiKEY}deleteClientes`;
+    return this.http.post<any>(Url, data);
+  }
+ 
+
+
+
+  countryList(): Observable<any> {
+    const Url = `${environment.apiKEY}countryList`;
+    return this.http.get<any>(Url);
+  }
+  getStates(): Observable<any> {
+    const Url = `${environment.apiKEY}getStates`;
+    return this.http.get<any>(Url);
+  }
 
   errorHandle(error: HttpErrorResponse) {
     console.log('error', error.message);

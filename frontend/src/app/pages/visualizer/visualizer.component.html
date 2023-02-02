@@ -1,0 +1,44 @@
+<nb-card>
+  <nb-card-header>View ventas</nb-card-header>
+  <nb-card-body>
+    <label class="search-label" for="search">Search:</label>
+    <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input">
+    <table [nbTreeGrid]="dataSource">
+      <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+      <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+      <ng-container *ngFor="let column of defaultColumns; let index = index" [nbTreeGridColumnDef]="column">
+        <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>
+          {{headerColumns[index]}}
+        </th>
+        <ng-container *ngIf="column != 'Action'">
+          <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '-'}}</td>
+        </ng-container>
+        <ng-container *ngIf="column == 'Action'">
+          <td nbTreeGridCell *nbTreeGridCellDef="let row">
+            <div class="d-flex justify-content-between">
+              <div>
+                <button nbButton size="tiny" status="warning" type="button"
+                  [routerLink]="['/pages/ventas/edit-ventas',row.data.id]"><i class="fa fa-edit"></i></button>
+              </div>
+              <div>
+                <button nbButton size="tiny" status="danger" type="button" (click)="open(dialog,row.data.id)"><i
+                    class="fa fa-trash"></i></button>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+      </ng-container>
+    </table>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Eliminar ventas</nb-card-header>
+    <nb-card-body>¿Estás seguro de que quieres eliminar el ventas?</nb-card-body>
+    <nb-card-footer>
+      <button nbButton (click)="ref.close()">Cerca</button>
+      <button nbButton (click)="DelRow(data, ref)">SI Eliminar</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

@@ -3,6 +3,10 @@
 // @nebular out of the box themes
 @import '~@nebular/theme/styles/themes';
 
+nb-layout-header {
+ background-color: #0d0d0d !important;
+}
+
 $nb-themes: nb-register-theme((
   layout-padding-top: 2.25rem,
 

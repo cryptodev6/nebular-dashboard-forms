@@ -123,10 +123,12 @@ exports.getPurchaseById = function (req, res) {
     });
 
 };
+
 exports.addVentas = function (req, res) {
+    console.log("arrive to add ventas backend");
     console.log('request: ', req);
     var param = req.body
-    // var data=[];
+    var data = [];
     console.log("params***********", param)
     if (req.param && !!param.codigoAuncliar) {
         User.addVentas(param, function (err, response) {
@@ -150,6 +152,11 @@ exports.editVentas = function (req, res) {
             return res.send(err);
         return res.json(response);
     });
+    // User.editPurchase(param, function (err, response) {
+    //     if (err)
+    //         return res.send(err);
+    //     return res.json(response);
+    // });
 
 }
 exports.getVentas = function (req, res) {
@@ -181,3 +188,79 @@ exports.deleteVentas = function (req, res) {
     });
 
 }
+
+
+//////////clientes//////////
+
+// exports.addClientes = function (req, res) {
+//     console.log('request: ', req);
+//     var param = req.body
+//     if (req.param && !!param.rut) {
+//         User.addClientes(param, function (err, response) {
+//             if (err)
+//                 return response.send(err);
+//                 return  res.json(response);
+//         });
+//     } else {
+//         let data = [];
+//         data['error'] = true;
+//         data['msg'] = 'All field required';
+//         data['body'] = [];
+//         console.log(data)
+//         res.json(data);
+//     }
+
+// }
+
+exports.addClientes = function (req, res) {
+    var param = req.body;
+    if (param) {
+        User.addClientes(param, function (err, response) {
+            if (err)
+                return response.send(err);
+            return res.json(response);
+        });
+    }
+}
+
+
+
+exports.editClientes = function (req, res) {
+    var param = req.body
+    // console.log("params***********", params)
+    User.editClientes(param, function (err, response) {
+        if (err)
+            res.send(err);
+        res.json(response);
+    });
+
+}
+exports.deleteClientes = function (req, res) {
+    var param = req.body
+    User.deleteClientes(param, function (err, response) {
+        if (err)
+            res.send(err);
+        res.json(response);
+    });
+
+}
+exports.getClientes = function (req, res) {
+    var params = { ...req.query, ...req.params };
+    // console.log("params***********", params)
+    User.getClientes(params, function (err, response) {
+        if (err)
+            res.send(err);
+        res.json(response);
+    });
+
+};
+exports.getClientesById = function (req, res) {
+    var params = { ...req.query, ...req.params };
+    // console.log("params***********", params)
+    User.getClientesById(params, function (err, response) {
+        if (err)
+            res.send(err);
+        res.json(response);
+    });
+
+};

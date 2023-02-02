@@ -12,14 +12,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { CreateProviderComponent } from './provider/create-provider/create-provider.component';
 import { ViewBuyersComponent } from './buyers/view-buyers/view-buyers.component';
-import { CloseCycleComponent } from './ventas/close-cycle/close-cycle.component'; 
-import { VisualizerComponent } from './ventas/visualizer/visualizer.component'; 
+import { CloseCycleComponent } from './close-cycle/close-cycle.component';
+import { VisualizerComponent } from './visualizer/visualizer.component';
+import { CreateCustomerComponent } from './customer/create-customer/create-customer.component';
+import { ViewCustomerComponent } from './customer/view-customer/view-customer.component';
 
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
   children: [
-    { path: 'dashboard', redirectTo: 'dashboard', pathMatch: 'full' },
     {
       path: 'dashboard',
       component: DashboardComponent,
@@ -70,7 +71,7 @@ const routes: Routes = [{
         },
         {
           path:'edit-ventas/:id',
-          component:CloseCycleComponent
+          component:CloseCycleComponent,
         }
       ],
     },
@@ -89,6 +90,24 @@ const routes: Routes = [{
         {
           path:'edit-provider/:id',
           component:CreateProviderComponent
+        }
+      ],
+    },
+    {
+      path: 'customer',
+      component: null,
+      children: [
+        {
+          path: 'create-customer',
+          component: CreateCustomerComponent,
+        },
+        {
+          path: 'view-customer',
+          component: ViewCustomerComponent,
+        },
+        {
+          path:'edit-customer/:id',
+          component:CreateCustomerComponent
         }
       ],
     },

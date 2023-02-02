@@ -408,15 +408,14 @@ export class CreateInputComponent implements OnInit {
     });
     form_data.append('documento', this.documento && this.documento[0]);
 
-    // this.declareList.saveDeclareData(form_data).subscribe(
-    //   (result: any) => {
-    //     this.toastrService.show('Successfully Added', result.message, iconPrimaryConfig);
-    //   },
-    //   (error: any) => {
-    //     this.toastrService.show('Required fields are missing', error.error.error, iconDangerConfig);
-    //   }
-    // );
-
+    this.declareList.saveDeclareData(form_data).subscribe(
+      (result: any) => {
+        this.toastrService.show('Successfully Added', result.message, iconPrimaryConfig);
+      },
+      (error: any) => {
+        this.toastrService.show('Required fields are missing', error.error.error, iconDangerConfig);
+      }
+    );
     this.documento = [];
     f.form.reset();
   }

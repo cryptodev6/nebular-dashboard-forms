@@ -12,7 +12,7 @@ import { CreateInputComponent } from './input/create-input/create-input.componen
 import { ViewInputComponent } from './input/view-input/view-input.component';
 import { CreatePurchaseComponent } from './purchase/create-purchase/create-purchase.component';
 import { ViewPurchaseComponent } from './purchase/view-purchase/view-purchase.component';
-import { CloseCycleComponent } from './ventas/close-cycle/close-cycle.component';
+import { CloseCycleComponent } from './close-cycle/close-cycle.component';
 import { CreateProviderComponent } from './provider/create-provider/create-provider.component';
 import { ViewProviderComponent } from './provider/view-provider/view-provider.component';
 import { CreateBuyersComponent } from './buyers/create-buyers/create-buyers.component';
@@ -21,7 +21,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { jqxDropDownButtonModule } from 'jqwidgets-ng/jqxdropdownbutton';
 import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
-import { VisualizerComponent } from './ventas/visualizer/visualizer.component'; 
+import { VisualizerComponent } from './visualizer/visualizer.component';
+import { CreateCustomerComponent } from './customer/create-customer/create-customer.component';
+import { ViewCustomerComponent } from './customer/view-customer/view-customer.component';
 
 @NgModule({
   imports: [
@@ -61,6 +63,8 @@ import { VisualizerComponent } from './ventas/visualizer/visualizer.component';
     CreateBuyersComponent,
     ViewBuyersComponent,
     VisualizerComponent,
+    CreateCustomerComponent,
+    ViewCustomerComponent
 
   ],
 })

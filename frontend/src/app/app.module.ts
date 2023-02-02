@@ -23,11 +23,9 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { jqxDropDownButtonModule } from 'jqwidgets-ng/jqxdropdownbutton';
 import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
-import { DashboardssComponent } from './dashboardss/dashboardss.component';
-
 
 @NgModule({
-  declarations: [AppComponent, DashboardssComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

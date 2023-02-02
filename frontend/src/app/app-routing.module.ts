@@ -11,20 +11,9 @@ import {
 
 export const routes: Routes = [
   {
-    path: '',
-    redirectTo: '/admin/dashboard',
-    pathMatch: 'full'
-  },
-
-  {
-    path: 'user',
-    loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule),
-      
-  },
-  {
-    path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
-      
+    path: 'pages',
+    loadChildren: () => import('./pages/pages.module')
+      .then(m => m.PagesModule),
   },
   {
     path: 'auth',
@@ -56,9 +45,8 @@ export const routes: Routes = [
       },
     ],
   },
-  // { path: 'pages', redirectTo: 'pages/dashboard', pathMatch: 'full' },
-  // { path: 'admin', redirectTo: 'admin/dashboard', pathMatch: 'full' },
-  // { path: '**', redirectTo: 'pages/dashboard' },
+  { path: '', redirectTo: 'pages/dashboard', pathMatch: 'full' },
+  { path: '**', redirectTo: 'pages/dashboard' },
 ];
 
 const config: ExtraOptions = {

@@ -1,5 +1,6 @@
 <nb-card>
-  <nb-card-header>{{headerTxt}}</nb-card-header>
+  <nb-card-header>Crear Compras</nb-card-header>
+  <!-- <nb-card-header>{{headerTxt}}</nb-card-header> -->
   <nb-card-body class="example-items-col mt-2">
     <form name="createProviderForm" #createProviderForm class="dis-flex just-between align-start"
       (ngSubmit)="onSubmit(createProviderForm)">
@@ -32,13 +33,14 @@
         </span>
         <span class="text-danger" *ngIf="!data.value && error">{{data.title + data.required}}</span>
 
-        <jqxDropDownButton #adquiridasDropdownButton placeholder="{{ data.title }}" name="{{ data.name }}"
-          *ngIf="data.name == 'adquiridas_a_titulo'" required fullWidth>
-          <jqxGrid #adquiridasGrid [theme]="'material'" (onRowselect)="adquiridasGridOnRowSelect($event)"
-            [source]="adquiridasDataAdapter" [columns]="adquiridasColumns" [pageable]="true" [columnsresize]="true"
-            [autoheight]="true" [sortable]="true" [filterable]="true">
-          </jqxGrid>
-        </jqxDropDownButton>
+ 
+        <nb-select *ngIf="data.name == 'adquiridas_a_titulo'" placeholder="{{ data.title }}" [(ngModel)]="data.value"
+          required class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'" fullWidth
+          name="{{ data.name }}">
+          <nb-option value="Compra-Venta">Compra-Venta</nb-option>
+          <nb-option value="Contrato de mandato">Contrato de mandato</nb-option>
+          <nb-option value="Otros">Otros</nb-option>
+        </nb-select>
 
         <!-- <nb-select *ngIf="data.name == 'adquiridas_a_titulo'" placeholder="{{ data.title }}" [(ngModel)]="data.value"
           required class="d-block m-0" [status]="!data.value && error ? 'danger' : 'basic'" fullWidth

@@ -1,10 +1,10 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 const dbcon = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'nebulatDsh_api'
+    user: 'phpmyadmin',
+    password: 'root',
+    database: 'westmetals'
 })
 
 dbcon.connect(function (err, res) {

@@ -20,8 +20,18 @@ router.get('/getPurchase', userController.getPurchase);
 router.get('/getPurchaseById', userController.getPurchaseById);
 ///////////////Ventas///////////////
 router.post('/addVentas', userController.addVentas);
+router.get('/addVentas', function() {
+	console.log("arrived to add ventas");
+});
 router.post('/editVentas', userController.editVentas);
-router.post('/deleteVentas', userController.deleteVentas);
 router.get('/getVentas', userController.getVentas);
+router.post('/deleteVentas', userController.deleteVentas);
 router.get('/getVentasById', userController.getVentasById);
+
+/////////clientes/////////////
+router.post('/addClientes', userController.addClientes);
+router.post('/editClientes', userController.editClientes);
+router.post('/deleteClientes', userController.deleteClientes);
+router.get('/getClientes', userController.getClientes);
+router.get('/getClientesById', userController.getClientesById);
 module.exports = router;
