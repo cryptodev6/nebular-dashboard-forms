@@ -121,7 +121,7 @@ optionList  :any[] =['option1', "option2" ]
       {
         name: 'plan',
         title: 'Plan',
-        inputType: 'list',
+        inputType: 'text',
         width: 25,
         value: '',
         required:' Required'
@@ -316,7 +316,7 @@ optionList  :any[] =['option1', "option2" ]
   }
 
   pickCountry(event:any, toempty = true) {
-    if(toempty && this.formFeildList[4].name == 'plan') {
+    if(toempty && this.formFeildList[4].name == '') {
       this.formFeildList[4].value = '';
     }
     this.pickedStates = this.statelist.filter(item => item.country_id == event);

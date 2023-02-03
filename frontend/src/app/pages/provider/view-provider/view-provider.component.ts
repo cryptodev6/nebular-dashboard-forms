@@ -22,6 +22,7 @@ interface PRDEntry {
   razon_social:any,
   telefono:any,
   updated_at:any,
+  resolucion:any
 }
 
 @Component({
@@ -31,10 +32,10 @@ interface PRDEntry {
 })
 export class ViewProviderComponent implements OnInit {
   // 'resolucion', 'vencimiento', 'prefijo', 'desde', 'hasta',
-  defaultColumns = [ 'codigo_proveedor','codigo_padre', 'razon_social', 'ciudades', 'pais', 'ciudad', 'telefono', 'cuenta', 'Action',];
+  defaultColumns = [ 'codigo_proveedor','resolucion','codigo_padre', 'razon_social', 'ciudades', 'pais', 'ciudad', 'telefono', 'cuenta', 'Action',];
   allColumns = [ ...this.defaultColumns ];
   headerColumns = [
-    'Codigo proveedor', 'Codigo padre', 'Razon social', 'Ciudades', 'Pais', 'Ciudad', 'Telefono', 'Cuenta', 'Action',
+    'Codigo proveedor', 'Resolucion','Codigo padre', 'Razon social', 'Ciudades', 'Pais', 'Ciudad', 'Telefono', 'Cuenta', 'Action',
   ];
   result :any
   dataSource: NbTreeGridDataSource<PRDEntry>;
